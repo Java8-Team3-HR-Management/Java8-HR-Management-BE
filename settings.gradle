@@ -1,0 +1,8 @@
+rootProject.name = 'HR_MS'
+include 'auth-service'
+include 'user-service'
+include 'company-service'
+include 'personel-service'
+include 'mail-service'
+include 'config-server-git'
+
