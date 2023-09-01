@@ -1,0 +1,14 @@
+server:
+  port: 8880
+spring:
+  application:
+    name: config-server-git
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/Java8-Team3-HR-Management/config-server-git.git"
+          default-label: main
+          skip-ssl-validation: true
+          username: uguryagmur96
+          password: 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
