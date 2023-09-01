@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8880
+      fail-fast: false
+  config:
+    import: "configserver:"
+  application:
+    name: user-service-application
+
+
