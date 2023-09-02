@@ -1,0 +1,22 @@
+
+server:
+  port: 9091
+
+spring:
+  datasource:
+      url: jdbc:postgresql://localhost:5432/FinalProjectAuthDB
+      username: postgres
+      password: 1234
+      driver-class-name: org.postgresql.Driver
+
+  cloud:
+    config:
+      uri: http://localhost:8880
+      fail-fast: false
+  config:
+    import: "configserver:"
+  application:
+    name: auth-service-application
+
+
+
