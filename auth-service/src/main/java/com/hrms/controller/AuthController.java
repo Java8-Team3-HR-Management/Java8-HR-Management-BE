@@ -1,0 +1,35 @@
+package com.hrms.controller;
+
+import com.hrms.dto.request.DoRegisterRequestDto;
+import com.hrms.dto.response.DoRegisterResponseDto;
+import com.hrms.service.AuthService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+import static com.hrms.constants.RestApis.AUTH;
+import static com.hrms.constants.RestApis.*;
+@RestController
+@RequestMapping(AUTH)
+@RequiredArgsConstructor
+public class AuthController {
+    private final AuthService authService;
+    @PostMapping(REGISTER)
+    @CrossOrigin("*")
+    public ResponseEntity<DoRegisterResponseDto> doRegister(@RequestBody @Valid DoRegisterRequestDto dto){
+        Boolean isRegister = authService.register(dto);
+        if(isRegister)
+            return ResponseEntity.ok(DoRegisterResponseDto.builder()
+                    .status(200)
+                    .result("Kayıt İşlemi Başarılı.")
+                    .build());
+        return ResponseEntity.badRequest().body(
+                DoRegisterResponseDto.builder()
+                        .status(400)
+                        .result("Kayıt İşlemi Başarısız oldu. Lütfen tekrar deneyiniz!")
+                        .build()
+        );
+    }
+}
