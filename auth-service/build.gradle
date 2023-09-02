@@ -1,19 +1,13 @@
-plugins {
-    id 'java'
-}
-
-group = 'com.hrms'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${versions.springBoot}")
+    }
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-}
-
-test {
-    useJUnitPlatform()
+    implementation libs.springDataJpa
+    implementation libs.postgresql
+    implementation libs.springCloudConfigClient
+    implementation libs.springCloudConfig
+    implementation libs.springBootAmqp
 }
