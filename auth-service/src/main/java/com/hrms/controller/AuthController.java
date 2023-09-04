@@ -2,6 +2,8 @@ package com.hrms.controller;
 
 import com.hrms.dto.request.DoRegisterRequestDto;
 import com.hrms.dto.response.DoRegisterResponseDto;
+import com.hrms.rabbitmq.model.CreateProfile;
+import com.hrms.rabbitmq.producer.CreateProfileProducer;
 import com.hrms.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,28 @@ import static com.hrms.constants.RestApis.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final CreateProfileProducer createProfileProducer;
+
+
+    @GetMapping("/testrabbit")
+    public ResponseEntity<Void> testRabbitSendMessage(String username,String email,Long authid){
+        createProfileProducer.sendCreateProfileMessage(
+                CreateProfile.builder()
+                        .authid(authid)
+                        .email(email)
+                        .username(username)
+                        .build()
+        );
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+
+
+
+
     @PostMapping(REGISTER)
     @CrossOrigin("*")
     public ResponseEntity<DoRegisterResponseDto> doRegister(@RequestBody @Valid DoRegisterRequestDto dto){
