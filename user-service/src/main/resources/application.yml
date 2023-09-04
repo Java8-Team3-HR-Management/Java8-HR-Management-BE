@@ -1,7 +1,7 @@
 spring:
   cloud:
     config:
-      uri: http://localhost:8880
+      uri: ${CONFIG_SERVER_HRMS_URL}
       fail-fast: false
   config:
     import: "configserver:"

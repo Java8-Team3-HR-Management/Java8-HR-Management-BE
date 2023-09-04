@@ -10,5 +10,5 @@ spring:
           uri: "https://github.com/Java8-Team3-HR-Management/config-server-git.git"
           default-label: main
           skip-ssl-validation: true
-          username: uguryagmur96
-          password: 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
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
