@@ -1,6 +1,8 @@
 package com.hrms.controller;
 
+import com.hrms.dto.request.DoLoginRequestDto;
 import com.hrms.dto.request.DoRegisterRequestDto;
+import com.hrms.dto.response.DoLoginResponseDto;
 import com.hrms.dto.response.DoRegisterResponseDto;
 import com.hrms.rabbitmq.model.CreateProfile;
 import com.hrms.rabbitmq.producer.CreateProfileProducer;
@@ -33,13 +35,6 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-
-
-
-
-
-
-
     @PostMapping(REGISTER)
     @CrossOrigin("*")
     public ResponseEntity<DoRegisterResponseDto> doRegister(@RequestBody @Valid DoRegisterRequestDto dto){
@@ -56,4 +51,23 @@ public class AuthController {
                         .build()
         );
     }
+
+    @PostMapping(LOGIN)
+    @CrossOrigin("*")
+    public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
+        String token = authService.login(dto);
+        return ResponseEntity.ok(DoLoginResponseDto.builder()
+                .status(200)
+                .result("Giriş İşlemi Başarılı")
+                .token(token)
+                .build());
+    }
+
+
+
+
+
+
 }
+
+
