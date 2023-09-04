@@ -6,7 +6,4 @@ spring:
   config:
     import: "configserver:"
   application:
-    name: auth-service-application
-
-
-
+    name: company-service-application

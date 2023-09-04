@@ -6,13 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
+@SuperBuilder
 @Table(name = "tblauth")
-@Entity
-public class Auth {
+public class Auth extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -22,7 +23,6 @@ public class Auth {
     String password;
     @Column(unique = true)
     String email;
-
     @Enumerated(EnumType.STRING)
     @Builder.Default
     ERole roles = ERole.ADMIN;
