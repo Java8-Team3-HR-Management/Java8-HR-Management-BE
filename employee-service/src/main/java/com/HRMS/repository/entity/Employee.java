@@ -1,6 +1,5 @@
 package com.HRMS.repository.entity;
 
-import com.HRMS.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,18 +11,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "quests")
-public class User {
+@Document(collection = "employees")
+public class Employee {
     @Id
     String id;
-    Long authid;
     String nameSurname;
     String email;
     String password;
     String department;
     String title;
     String location;
+    Long salary;
     @Builder.Default
-    EStatus status= EStatus.PENDING;
-
+    Boolean isActive=true;
 }
