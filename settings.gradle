@@ -5,4 +5,6 @@ include 'company-service'
 include 'mail-service'
 include 'config-server-git'
 include 'employee-service'
+include 'employee-service'
+include 'manager-service'
 
