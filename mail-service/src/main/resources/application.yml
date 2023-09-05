@@ -1,9 +1,0 @@
-spring:
-  cloud:
-    config:
-      uri: http://localhost:8080
-      fail-fast: false
-  config:
-    import: "configserver:"
-  application:
-    name: mail-service-application
