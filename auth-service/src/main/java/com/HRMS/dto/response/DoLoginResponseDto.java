@@ -1,4 +1,4 @@
-package com.hrms.dto.response;
+package com.HRMS.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

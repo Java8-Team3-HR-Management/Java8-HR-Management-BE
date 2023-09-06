@@ -1,20 +1,14 @@
 package com.HRMS.controller;
 
-<<<<<<< HEAD:auth-service/src/main/java/com/HRMS/controller/AuthController.java
+
+import com.HRMS.dto.request.DoLoginRequestDto;
 import com.HRMS.dto.request.DoRegisterRequestDto;
+import com.HRMS.dto.response.DoLoginResponseDto;
 import com.HRMS.dto.response.DoRegisterResponseDto;
 import com.HRMS.rabbitmq.model.CreateProfile;
 import com.HRMS.rabbitmq.producer.CreateProfileProducer;
 import com.HRMS.service.AuthService;
-=======
-import com.hrms.dto.request.DoLoginRequestDto;
-import com.hrms.dto.request.DoRegisterRequestDto;
-import com.hrms.dto.response.DoLoginResponseDto;
-import com.hrms.dto.response.DoRegisterResponseDto;
-import com.hrms.rabbitmq.model.CreateProfile;
-import com.hrms.rabbitmq.producer.CreateProfileProducer;
-import com.hrms.service.AuthService;
->>>>>>> master:auth-service/src/main/java/com/hrms/controller/AuthController.java
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +57,7 @@ public class AuthController {
     @PostMapping(LOGIN)
     @CrossOrigin("*")
     public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
-        String token = authService.login(dto);
+        String token = authService.;
         return ResponseEntity.ok(DoLoginResponseDto.builder()
                 .status(200)
                 .result("Giriş İşlemi Başarılı")
