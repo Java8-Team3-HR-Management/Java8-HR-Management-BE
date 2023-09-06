@@ -13,7 +13,9 @@ import java.io.Serializable;
 @Builder
 public class MailRegisterModel implements Serializable {
 
-    String username;
+    String nameSurname;
     String email;
-    String randomPassword;
+    String password;
+    String companyMail;
+
 }
