@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
+import static com.HRMS.constants.RestApiList.*;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping(EMPLOYEE)
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService service;
-    @PostMapping("/addEmployee")
+    @PostMapping(ADDEMPLOYEE)
     public ResponseEntity<AddEmployeeResponseDto> addEmployee(@RequestBody @Valid AddEmployeeRequestDto dto) {
         Boolean isAddedSuccessfully = service.addEmployee(dto);
         if (isAddedSuccessfully) {
