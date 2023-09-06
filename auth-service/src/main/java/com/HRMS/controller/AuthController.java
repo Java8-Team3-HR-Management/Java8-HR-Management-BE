@@ -57,7 +57,7 @@ public class AuthController {
     @PostMapping(LOGIN)
     @CrossOrigin("*")
     public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
-        String token = authService.;
+        String token = authService.login(dto);
         return ResponseEntity.ok(DoLoginResponseDto.builder()
                 .status(200)
                 .result("Giriş İşlemi Başarılı")
