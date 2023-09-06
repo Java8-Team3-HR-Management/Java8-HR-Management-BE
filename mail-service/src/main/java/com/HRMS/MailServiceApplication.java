@@ -8,4 +8,8 @@ public class MailServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(MailServiceApplication.class);
     }
+
+
+    //Hrms2023 mail sifre
 }
+

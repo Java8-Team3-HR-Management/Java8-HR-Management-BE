@@ -1,4 +1,4 @@
-package com.hrms.utility;
+package com.HRMS.utility;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
