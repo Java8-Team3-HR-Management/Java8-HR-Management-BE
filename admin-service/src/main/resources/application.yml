@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_HRMS_URL}
+      fail-fast: false
+  config:
+    import: "configserver:"
+  application:
+    name: admin-service-application
+
+
+
