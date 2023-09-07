@@ -1,6 +1,8 @@
 package com.HRMS.services;
 
 import com.HRMS.dto.request.AddEmployeeRequestDto;
+import com.HRMS.dto.request.ListPermissionsRequestDto;
+import com.HRMS.dto.response.ListPermissionsResponseDto;
 import com.HRMS.exceptions.EmployeeException;
 import com.HRMS.exceptions.ErrorType;
 import com.HRMS.mapper.IEmployeeMapper;
@@ -30,5 +32,22 @@ public class EmployeeService {
         Employee emp= IEmployeeMapper.INSTANCE.toEmployeeFromDto(dto);
     repository.save(emp);
     return true;
+    }
+
+    public ListPermissionsResponseDto listPermissionsByEmployeeId(ListPermissionsRequestDto requestDto) {
+        Long employeeId = requestDto.getEmployeeId();
+        Optional<Employee> optionalEmployee = repository.findOptionalByEmail(requestDto.getEmail());
+
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            ListPermissionsResponseDto responseDto = new ListPermissionsResponseDto();
+            responseDto.setEmployeeId(employeeId);
+            responseDto.setEmployeeName(employee.getNameSurname());
+
+            return responseDto;
+
+        } else {
+            throw new EmployeeException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
     }
 }
