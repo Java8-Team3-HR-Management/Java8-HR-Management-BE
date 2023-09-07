@@ -1,14 +1,13 @@
 package com.HRMS.controller;
 
 import com.HRMS.dto.request.AddEmployeeRequestDto;
+import com.HRMS.dto.request.ListPermissionsRequestDto;
 import com.HRMS.dto.response.AddEmployeeResponseDto;
+import com.HRMS.dto.response.ListPermissionsResponseDto;
 import com.HRMS.services.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import static com.HRMS.constants.RestApiList.*;
 
@@ -32,4 +31,17 @@ public class EmployeeController {
                 .build());
 
     }
+
+
+    @GetMapping(PERMISSIONEMPLOYEE)
+    public ListPermissionsResponseDto listPermissionsByEmployeeId(@PathVariable Long employeeId) {
+        ListPermissionsRequestDto request = new ListPermissionsRequestDto();
+        request.setEmployeeId(employeeId);
+        return service.listPermissionsByEmployeeId(request);
+    }
+
+
+
+
+
 }
