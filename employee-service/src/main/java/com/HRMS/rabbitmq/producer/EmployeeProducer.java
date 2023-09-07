@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 public class EmployeeProducer {
     private final RabbitTemplate template;
 
-    public Boolean createEmployeeAtAuth(CreateEmployee employee) {
+    public void createEmployeeAtAuth(CreateEmployee employee) {
         template.convertSendAndReceive("exchange-employee-auth","key-employee-auth",employee);
-        return true;
+
     }
 }

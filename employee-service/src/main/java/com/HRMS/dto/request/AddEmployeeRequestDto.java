@@ -16,6 +16,7 @@ public class AddEmployeeRequestDto {
     String companyid;
     String nameSurname;
     String email;
+    String companyName;
     String companyEmail;
     String birthPlace;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

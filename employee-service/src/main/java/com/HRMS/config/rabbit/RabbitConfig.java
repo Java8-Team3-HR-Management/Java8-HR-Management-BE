@@ -14,6 +14,9 @@ public class RabbitConfig {
     private String routingKeyEmployeeAuth = "key-employee-auth";
     private String queueEmployeeAuth = "queue-employee-auth";
 
+    //
+    private String routingKeyEmployeeMail="key-employee-mail";
+    private String queueEmployeeMail="queue-employee-mail";
     // Tanımlanan rabbit configlerinin bean ile inject edilip bind edilmesi
     @Bean
     DirectExchange directExchangeAuthMethod() {return new DirectExchange(exchangeCreateEmployeeAuth);}
@@ -23,4 +26,12 @@ public class RabbitConfig {
     public Binding bindingCreateEmployeeAuthMethod(final DirectExchange directExchangeAuthMethod,final Queue createQueueAuthCreateEmployeeMethod) {
         return BindingBuilder.bind(createQueueAuthCreateEmployeeMethod).to(directExchangeAuthMethod).with(routingKeyEmployeeAuth);
     }
+    @Bean
+    Queue createQueueEmployeeMailMethod() {return new Queue(queueEmployeeMail);}
+    @Bean
+    public Binding bindingEmployeeMailMethod(final DirectExchange directExchangeAuthMethod,final Queue createQueueEmployeeMailMethod) {
+        return BindingBuilder.bind(createQueueEmployeeMailMethod).to(directExchangeAuthMethod).with(routingKeyEmployeeMail);
+    }
+
+
 }
