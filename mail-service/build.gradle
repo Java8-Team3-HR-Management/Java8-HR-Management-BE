@@ -8,4 +8,7 @@ dependencies {
     implementation libs.springBootMailSender
     implementation libs.springBootAmqp
     implementation libs.springCloudConfigClient
+    implementation libs.springBootMailSender
+    implementation libs.postgresql
+    implementation libs.springDataJpa
 }

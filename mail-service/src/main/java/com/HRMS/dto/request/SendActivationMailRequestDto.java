@@ -1,5 +1,6 @@
-package com.HRMS.repository.entity;
+package com.HRMS.dto.request;
 
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +10,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Data
 @SuperBuilder
-public class BaseEntity {
-    boolean state;
-    Long createdate;
-    Long updatedate;
+public class SendActivationMailRequestDto {
+    String email;
+    String password;
+    String companyMail;
 }

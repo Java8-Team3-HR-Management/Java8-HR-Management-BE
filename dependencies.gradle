@@ -38,6 +38,7 @@ ext {
             hibernateValidator              : "org.hibernate.validator:hibernate-validator:${versions.hibernateValidator}",
             mapstruct                       : "org.mapstruct:mapstruct:${versions.mapstruct}",
             mapstructProcessor              : "org.mapstruct:mapstruct-processor:${versions.mapstruct}",
-            auth0                           : "com.auth0:java-jwt:${versions.auth0}"
+            auth0                           : "com.auth0:java-jwt:${versions.auth0}",
+
     ]
 }

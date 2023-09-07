@@ -1,25 +1,9 @@
-server:
-  port: 8085
-
 spring:
-  zipkin:
-    enabled: true
-    base-url: http://localhost:9411
-    service:
-      name: mail-service
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: uguryagmur4
-    password: root**
-    mail:
-      username: hrmanagementtba@gmail.com
-      password: ldhxknpwrrdwxjlg
-      host: smtp.gmail.com
-      port: 587
-      properties:
-        mail:
-          smtp:
-            auth: true
-            starttls:
-              enable: true
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_HRMS_URL}
+      fail-fast: false
+  config:
+    import: "configserver:"
+  application:
+    name: mail-service-application

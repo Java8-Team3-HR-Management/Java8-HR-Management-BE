@@ -23,6 +23,7 @@ public class Employee extends BaseEntity {
     String companyid;
     String nameSurname;
     String email;
+    String companyName;
     String companyEmail;
     String password;
     String birthPlace;

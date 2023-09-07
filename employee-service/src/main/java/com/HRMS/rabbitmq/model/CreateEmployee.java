@@ -12,4 +12,7 @@ import java.io.Serializable;
 public class CreateEmployee implements Serializable {
 
     String email;
+    String companyEmail;
+    String password;
+
 }

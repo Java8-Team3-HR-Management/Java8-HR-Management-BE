@@ -1,8 +1,9 @@
-package com.HRMS.utility;
+package com.HRMS.utils;
 
 import java.util.Random;
 
 public class RandomPasswordGenerator {
+
     public static String generateRandomPassword() {
         String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
                 +"jklmnopqrstuvwxyz!@#$%&";

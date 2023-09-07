@@ -16,11 +16,12 @@ public class RabbitConfig {
 
     // Rabbit config settings for create employee at employee service
 
-    private String exchangeCreateEmployeeAuth = "exchange-create-auth";
+    private final String exchangeCreateEmployeeAuth = "exchange-create-auth";
 
-    private String rootingKeyCreateEmployeeAuth = "key-employee-auth";
+    private final String rootingKeyCreateEmployeeAuth = "key-employee-auth";
 
-    private String queueAuthCreateEmployee = "queue-employee-auth";
+    private final String queueAuthCreateEmployee = "queue-employee-auth";
+
 // Beans for create guest user at user service
     @Bean
     DirectExchange directExchangeAuthMethod() {
@@ -56,4 +57,8 @@ public class RabbitConfig {
     Binding bindingEmployeeAuth(DirectExchange directExchangeEmployeeAuth, Queue queueEmployeeAuth) {
         return BindingBuilder.bind(queueEmployeeAuth).to(directExchangeEmployeeAuth).with(rootingKeyCreateEmployeeAuth);
     }
+
+    // Beans for send login information mail
+
+
 }
