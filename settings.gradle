@@ -8,5 +8,6 @@ include 'employee-service'
 include 'manager-service'
 include 'admin-service'
 include 'post-service'
+include 'api-gateway-service'
 
 
