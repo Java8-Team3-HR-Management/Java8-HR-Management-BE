@@ -13,7 +13,9 @@ import com.HRMS.rabbitmq.producer.SendActivationEmailProducer;
 import com.HRMS.repository.IEmployeeRepository;
 import com.HRMS.repository.entity.Employee;
 import com.HRMS.utils.RandomPasswordGenerator;
+import com.HRMS.utils.ServiceManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +24,20 @@ import java.util.Optional;
 import static com.HRMS.utils.RandomPasswordGenerator.*;
 
 @Service
-@RequiredArgsConstructor
-public class EmployeeService {
+
+public class EmployeeService extends ServiceManager<Employee,String> {
     private final IEmployeeRepository repository;
     private final EmployeeProducer employeeProducer;
     private final SendActivationEmailProducer emailProducer;
+
+    public EmployeeService(IEmployeeRepository repository, EmployeeProducer employeeProducer, SendActivationEmailProducer emailProducer) {
+        super(repository);
+        this.repository = repository;
+        this.employeeProducer = employeeProducer;
+        this.emailProducer = emailProducer;
+    }
+
+
 
 
     public Boolean addEmployee(AddEmployeeRequestDto dto){
@@ -36,7 +47,7 @@ public class EmployeeService {
             throw new EmployeeException(ErrorType.EMPLOYEE_ALREADY_EXIST);
         } else {
             Employee emp= IEmployeeMapper.INSTANCE.toEmployeeFromDto(dto);
-            repository.save(emp);
+            save(emp);
         }
         String mailGen= dto.getNameSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
         String pass= generateRandomPassword();
