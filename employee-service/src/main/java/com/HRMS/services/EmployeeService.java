@@ -16,6 +16,7 @@ import com.HRMS.utils.RandomPasswordGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.HRMS.utils.RandomPasswordGenerator.*;
@@ -66,5 +67,13 @@ public class EmployeeService {
         } else {
             throw new EmployeeException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
+    }
+    public Optional<List<Employee>> findOptionalByCompanyName(String companyName) {
+        Optional<List<Employee>> optionalEmployee = repository.findOptionalByCompanyName(companyName);
+        if (optionalEmployee.isEmpty()) {
+            throw new EmployeeException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
+        return repository.findOptionalByCompanyName(companyName);
+
     }
 }
