@@ -14,18 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class AddAdminRequestDto {
-    String companyid;
+
     String nameSurname;
     String email;
-    String companyEmail;
-    String birthPlace;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    LocalDate birthDate;
-    String department;
-    String title;
-    String location;
-    String phone;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    LocalDate membershipDate;
-    Long salary;
+    String password;
 }

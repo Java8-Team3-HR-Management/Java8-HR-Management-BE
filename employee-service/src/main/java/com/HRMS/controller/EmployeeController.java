@@ -4,11 +4,16 @@ import com.HRMS.dto.request.AddEmployeeRequestDto;
 import com.HRMS.dto.request.ListPermissionsRequestDto;
 import com.HRMS.dto.response.AddEmployeeResponseDto;
 import com.HRMS.dto.response.ListPermissionsResponseDto;
+import com.HRMS.repository.entity.Employee;
 import com.HRMS.services.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Optional;
+
 import static com.HRMS.constants.RestApiList.*;
 
 @RestController
@@ -36,6 +41,10 @@ public class EmployeeController {
         ListPermissionsRequestDto request = new ListPermissionsRequestDto();
         request.setEmployeeId(employeeId);
         return service.listPermissionsByEmployeeId(request);
+    }
+    @GetMapping("/findAll{companyName}")
+    public ResponseEntity<Optional<List<Employee>>> findAll(@PathVariable String companyName) {
+        return ResponseEntity.ok(service.findOptionalByCompanyName(companyName));
     }
 
 }
