@@ -32,6 +32,7 @@ public class AdminService  {
         Admin emp= IAdminMapper.INSTANCE.toAdminFromDto(dto);
         repository.save(emp);
         return true;
+
     }
 
 }
