@@ -2,6 +2,7 @@ package com.HRMS.services;
 
 import com.HRMS.dto.request.AddEmployeeRequestDto;
 import com.HRMS.dto.request.ListPermissionsRequestDto;
+import com.HRMS.dto.request.UpdateEmployeeRequestDto;
 import com.HRMS.dto.response.ListPermissionsResponseDto;
 import com.HRMS.exceptions.EmployeeException;
 import com.HRMS.exceptions.ErrorType;
@@ -36,9 +37,6 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         this.employeeProducer = employeeProducer;
         this.emailProducer = emailProducer;
     }
-
-
-
 
     public Boolean addEmployee(AddEmployeeRequestDto dto){
 
@@ -87,4 +85,19 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         return repository.findOptionalByCompanyName(companyName);
 
     }
+    public Boolean updateEmployee(UpdateEmployeeRequestDto requestDto) {
+        Optional<Employee> employee = repository.findById(requestDto.getEmployeeId());
+        if (employee.isEmpty()) {
+            throw new EmployeeException(ErrorType.ID_NOT_FOUND);
+        }
+        employee.get().setNameSurname(requestDto.getNameSurname());
+        employee.get().setEmail(requestDto.getEmail());
+        employee.get().setPhone(requestDto.getPhone());
+        update(employee.get());
+        return true;
+    }
+
+
+
+
 }
