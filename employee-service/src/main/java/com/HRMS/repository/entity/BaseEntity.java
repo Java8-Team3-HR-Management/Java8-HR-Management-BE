@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @SuperBuilder
 public class BaseEntity {
     boolean state;
-    Long createdate;
-    Long updatedate;
+    LocalDate createDate=LocalDate.now();
+    LocalDate updateDate;
 }

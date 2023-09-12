@@ -2,8 +2,10 @@ package com.HRMS.controller;
 
 import com.HRMS.dto.request.AddEmployeeRequestDto;
 import com.HRMS.dto.request.ListPermissionsRequestDto;
+import com.HRMS.dto.request.UpdateEmployeeRequestDto;
 import com.HRMS.dto.response.AddEmployeeResponseDto;
 import com.HRMS.dto.response.ListPermissionsResponseDto;
+import com.HRMS.dto.response.UpdateEmployeeResponseDto;
 import com.HRMS.repository.entity.Employee;
 import com.HRMS.services.EmployeeService;
 import jakarta.validation.Valid;
@@ -46,5 +48,14 @@ public class EmployeeController {
     public ResponseEntity<Optional<List<Employee>>> findAll(@PathVariable String companyName) {
         return ResponseEntity.ok(service.findOptionalByCompanyName(companyName));
     }
+
+    @PutMapping(UPDATEEMPLOYEE)
+    public ResponseEntity<Boolean> updateEmployee(@RequestBody @Valid UpdateEmployeeRequestDto dto) {
+        return ResponseEntity.ok(service.updateEmployee(dto));
+    }
+
+
+
+
 
 }

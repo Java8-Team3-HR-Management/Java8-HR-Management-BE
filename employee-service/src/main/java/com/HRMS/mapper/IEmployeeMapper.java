@@ -11,4 +11,5 @@ public interface IEmployeeMapper {
     IEmployeeMapper INSTANCE = Mappers.getMapper(IEmployeeMapper.class);
 
     Employee toEmployeeFromDto(final AddEmployeeRequestDto dto);
+
 }

@@ -1,6 +1,7 @@
 package com.HRMS.services;
 
 import com.HRMS.dto.request.AddEmployeeRequestDto;
+import com.HRMS.dto.request.UpdateEmployeeRequestDto;
 import com.HRMS.dto.request.ListPermissionsRequestDto;
 import com.HRMS.dto.response.ListPermissionsResponseDto;
 import com.HRMS.exceptions.EmployeeException;
@@ -12,8 +13,7 @@ import com.HRMS.rabbitmq.producer.EmployeeProducer;
 import com.HRMS.rabbitmq.producer.SendActivationEmailProducer;
 import com.HRMS.repository.IEmployeeRepository;
 import com.HRMS.repository.entity.Employee;
-import com.HRMS.utils.RandomPasswordGenerator;
-import lombok.RequiredArgsConstructor;
+import com.HRMS.utils.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +22,17 @@ import java.util.Optional;
 import static com.HRMS.utils.RandomPasswordGenerator.*;
 
 @Service
-@RequiredArgsConstructor
-public class EmployeeService {
+public class EmployeeService extends ServiceManager<Employee, String> {
     private final IEmployeeRepository repository;
     private final EmployeeProducer employeeProducer;
     private final SendActivationEmailProducer emailProducer;
+
+    public EmployeeService(IEmployeeRepository repository, EmployeeProducer employeeProducer,SendActivationEmailProducer emailProducer) {
+        super(repository);
+        this.repository=repository;
+        this.employeeProducer=employeeProducer;
+        this.emailProducer=emailProducer;
+    }
 
 
     public Boolean addEmployee(AddEmployeeRequestDto dto){
@@ -76,4 +82,19 @@ public class EmployeeService {
         return repository.findOptionalByCompanyName(companyName);
 
     }
+
+    public Boolean updateEmployee(UpdateEmployeeRequestDto requestDto) {
+        Optional<Employee> employee = repository.findById(requestDto.getEmployeeId());
+        if (employee.isEmpty()) {
+            throw new EmployeeException(ErrorType.ID_NOT_FOUND);
+        }
+        employee.get().setNameSurname(requestDto.getNameSurname());
+        employee.get().setEmail(requestDto.getEmail());
+        employee.get().setPhone(requestDto.getPhone());
+        update(employee.get());
+        return true;
+    }
+
+
+
 }
