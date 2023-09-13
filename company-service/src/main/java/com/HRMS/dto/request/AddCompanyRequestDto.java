@@ -22,6 +22,6 @@ public class AddCompanyRequestDto {
     String companyEmail;
     @Size(min = 10,max=64)
     String companyWebsite;
-    @Size(min = 10,max=10)
+
     Long taxNumber;
 }

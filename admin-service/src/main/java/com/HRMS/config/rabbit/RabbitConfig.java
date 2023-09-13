@@ -14,6 +14,8 @@ public class RabbitConfig {
     private String exchangeCreateAdminAuth = "exchange-admin-auth";
     private String routingKeyAdminAuth = "key-admin-auth";
     private String queueAdminAuth = "queue-admin-auth";
+    private String routingKeyAdminCompany="key-admin-company";
+    private String queueAdminCompany="queue-admin-company";
 
 
     // TanÄ±mlanan rabbit configlerinin bean ile inject edilip bind edilmesi;
@@ -38,5 +40,14 @@ public class RabbitConfig {
 
     }
 
+    @Bean
+    Queue createQueueAdminCompanyMethod(){
+        return new Queue(queueAdminCompany);
+    }
+
+    @Bean
+    public Binding bindingAdminCompanyMethod(final DirectExchange directExchangeAuthMethod, final Queue createQueueAdminCompanyMethod){
+        return BindingBuilder.bind(createQueueAdminCompanyMethod).to(directExchangeAuthMethod).with(routingKeyAdminCompany);
+    }
 }
 

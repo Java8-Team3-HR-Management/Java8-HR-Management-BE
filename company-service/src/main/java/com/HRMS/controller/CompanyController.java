@@ -5,7 +5,6 @@ import com.HRMS.dto.request.UpdateCompanyRequestDto;
 import com.HRMS.dto.response.AddCompanyResponseDto;
 import com.HRMS.dto.response.GetAllCompanyResponseDto;
 import com.HRMS.dto.response.UpdateCompanyResponseDto;
-import com.HRMS.repository.entity.Company;
 import com.HRMS.services.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
