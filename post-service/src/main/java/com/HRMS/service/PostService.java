@@ -3,6 +3,7 @@ package com.HRMS.service;
 import com.HRMS.dto.request.AddPostRequestDto;
 import com.HRMS.dto.request.UpdatePostRequestDto;
 import com.HRMS.dto.response.AddPostResponseDto;
+import com.HRMS.dto.response.GetAllPendingPostResponseDto;
 import com.HRMS.dto.response.UpdatePostResponseDto;
 import com.HRMS.exceptions.PostException;
 import com.HRMS.exceptions.ErrorType;
@@ -13,6 +14,7 @@ import com.HRMS.repository.enums.EStatus;
 import com.HRMS.utils.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,6 +109,18 @@ public class PostService extends ServiceManager<Post,String> {
         }
     }
 
+
+
+    public List<GetAllPendingPostResponseDto> getAllPendingPost(){
+        List<Post> getAllPending = repository.findAll();
+        List<GetAllPendingPostResponseDto> posts = new ArrayList<>();
+        for (Post post : getAllPending) {
+            if (post.getStatus().equals("PENDING")){
+                posts.add(IPostMapper.INSTANCE.toGetAllPendingResponseDtoFromPost(post));
+            }
+        }
+        return posts;
+    }
 
 
 
