@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
-
 public class ServiceManager <T extends BaseEntity,ID> implements IService<T,ID>{
     private final MongoRepository<T,ID> repository;
     @Override
@@ -31,7 +30,6 @@ public class ServiceManager <T extends BaseEntity,ID> implements IService<T,ID>{
         });
         return repository.saveAll(t);
     }
-
 
     @Override
     public T update(T t) {
@@ -58,6 +56,4 @@ public class ServiceManager <T extends BaseEntity,ID> implements IService<T,ID>{
     public Optional<T> findById(ID id) {
         return repository.findById(id);
     }
-
-
 }

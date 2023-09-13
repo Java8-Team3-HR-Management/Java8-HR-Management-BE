@@ -24,10 +24,8 @@ public enum ErrorType {
     DOLOGIN_INVALID_USERNAME_PASSWORD(1004,"Kullanıcı adı veya şifre hatalı",HttpStatus.BAD_REQUEST),
     NAME_IS_NULL(1005,"Name alanı boş geçilemez",HttpStatus.BAD_REQUEST),
     ID_NOT_FOUND(1006,"Aradığınız id ye ait kayıt bulunamadı",HttpStatus.BAD_REQUEST),
-
-    EMPLOYEE_ALREADY_EXIST(1007,"This employee already exist",HttpStatus.BAD_REQUEST),
-    EMPLOYEE_UNAUTHORIZED_UPDATE(1009,"Kimlik doğrulaması başarısız.",HttpStatus.BAD_REQUEST),
-    EMPLOYEE_NOT_FOUND(1008,"Çalışan bulunamadı!",HttpStatus.BAD_REQUEST);
+    COMPANY_ALREADY_EXISTS(1007,"This company already exist",HttpStatus.BAD_REQUEST),
+    COMPANY_NOT_FOUND(1007,"This company is not found at our database",HttpStatus.BAD_REQUEST);
 
 
     

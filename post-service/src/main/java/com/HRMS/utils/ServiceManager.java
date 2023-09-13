@@ -3,7 +3,6 @@ package com.HRMS.utils;
 import com.HRMS.repository.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalDate;
@@ -12,30 +11,20 @@ import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
-
 public class ServiceManager <T extends BaseEntity,ID> implements IService<T,ID>{
     private final MongoRepository<T,ID> repository;
     @Override
     public T save(T t) {
-        t.setCreateDate(LocalDate.now());
-        t.setUpdateDate(LocalDate.now());
         return repository.save(t);
     }
 
     @Override
     public Iterable<T> saveAll(Iterable<T> t) {
-        t.forEach(x->{
-            x.setCreateDate(LocalDate.now());
-            x.setUpdateDate(LocalDate.now());
-
-        });
         return repository.saveAll(t);
     }
 
-
     @Override
     public T update(T t) {
-        t.setUpdateDate(LocalDate.now());
         return repository.save(t);
     }
 
@@ -58,6 +47,4 @@ public class ServiceManager <T extends BaseEntity,ID> implements IService<T,ID>{
     public Optional<T> findById(ID id) {
         return repository.findById(id);
     }
-
-
 }

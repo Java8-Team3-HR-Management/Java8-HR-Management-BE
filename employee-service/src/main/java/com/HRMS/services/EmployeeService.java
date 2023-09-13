@@ -3,6 +3,7 @@ package com.HRMS.services;
 import com.HRMS.dto.request.AddEmployeeRequestDto;
 import com.HRMS.dto.request.UpdateEmployeeRequestDto;
 import com.HRMS.dto.request.ListPermissionsRequestDto;
+import com.HRMS.dto.request.UpdateEmployeeRequestDto;
 import com.HRMS.dto.response.ListPermissionsResponseDto;
 import com.HRMS.exceptions.EmployeeException;
 import com.HRMS.exceptions.ErrorType;
@@ -13,7 +14,12 @@ import com.HRMS.rabbitmq.producer.EmployeeProducer;
 import com.HRMS.rabbitmq.producer.SendActivationEmailProducer;
 import com.HRMS.repository.IEmployeeRepository;
 import com.HRMS.repository.entity.Employee;
+
+import com.HRMS.utils.RandomPasswordGenerator;
 import com.HRMS.utils.ServiceManager;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,16 +28,20 @@ import java.util.Optional;
 import static com.HRMS.utils.RandomPasswordGenerator.*;
 
 @Service
-public class EmployeeService extends ServiceManager<Employee, String> {
+
+
+public class EmployeeService extends ServiceManager<Employee,String> {
+
     private final IEmployeeRepository repository;
     private final EmployeeProducer employeeProducer;
     private final SendActivationEmailProducer emailProducer;
 
-    public EmployeeService(IEmployeeRepository repository, EmployeeProducer employeeProducer,SendActivationEmailProducer emailProducer) {
+
+    public EmployeeService(IEmployeeRepository repository, EmployeeProducer employeeProducer, SendActivationEmailProducer emailProducer) {
         super(repository);
-        this.repository=repository;
-        this.employeeProducer=employeeProducer;
-        this.emailProducer=emailProducer;
+        this.repository = repository;
+        this.employeeProducer = employeeProducer;
+        this.emailProducer = emailProducer;
     }
 
 
@@ -42,7 +52,7 @@ public class EmployeeService extends ServiceManager<Employee, String> {
             throw new EmployeeException(ErrorType.EMPLOYEE_ALREADY_EXIST);
         } else {
             Employee emp= IEmployeeMapper.INSTANCE.toEmployeeFromDto(dto);
-            repository.save(emp);
+            save(emp);
         }
         String mailGen= dto.getNameSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
         String pass= generateRandomPassword();
@@ -83,6 +93,7 @@ public class EmployeeService extends ServiceManager<Employee, String> {
 
     }
 
+
     public Boolean updateEmployee(UpdateEmployeeRequestDto requestDto) {
         Optional<Employee> employee = repository.findById(requestDto.getEmployeeId());
         if (employee.isEmpty()) {
@@ -94,6 +105,8 @@ public class EmployeeService extends ServiceManager<Employee, String> {
         update(employee.get());
         return true;
     }
+
+
 
 
 
