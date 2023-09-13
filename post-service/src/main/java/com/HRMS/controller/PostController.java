@@ -1,7 +1,9 @@
 package com.HRMS.controller;
 
 import com.HRMS.dto.request.AddPostRequestDto;
+import com.HRMS.dto.request.UpdatePostRequestDto;
 import com.HRMS.dto.response.AddPostResponseDto;
+import com.HRMS.dto.response.UpdatePostResponseDto;
 import com.HRMS.repository.entity.Post;
 import com.HRMS.repository.enums.EStatus;
 import com.HRMS.service.PostService;
@@ -9,10 +11,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import static com.HRMS.constants.RestApiList.*;
 
 @RestController
@@ -32,8 +32,18 @@ public class PostController {
             //
             return ResponseEntity.badRequest().body(AddPostResponseDto.builder()
                     .status(EStatus.PENDING)
-                    .result("Please check the details you entered.")
+                    .result("Lütfen girdiğiniz ayrıntıları kontrol ediniz.")
                     .build());
         }
     }
+
+    @PutMapping(UPDATEPOST)
+    public ResponseEntity<UpdatePostResponseDto> updatePost(@PathVariable String postId, @RequestBody @Valid UpdatePostRequestDto requestDto) {
+        UpdatePostResponseDto responseDto = service.updatePost(postId, requestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+
+
+
 }
