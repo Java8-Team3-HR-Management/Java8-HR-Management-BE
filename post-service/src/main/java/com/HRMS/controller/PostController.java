@@ -23,10 +23,11 @@ public class PostController {
 
     @PostMapping(ADDPOST)
     public ResponseEntity<AddPostResponseDto> addPost(@RequestBody @Valid AddPostRequestDto requestDto) {
-        AddPostResponseDto responseDto = service.addPost(requestDto);
-
-        if (responseDto != null) {
-            return ResponseEntity.ok(responseDto);
+        Boolean check = service.addPost(requestDto);
+        if (check) {
+            return ResponseEntity.ok(AddPostResponseDto.builder()
+                    .result("Post added successfully.")
+                    .build());
         } else {
             //
             return ResponseEntity.badRequest().body(AddPostResponseDto.builder()
