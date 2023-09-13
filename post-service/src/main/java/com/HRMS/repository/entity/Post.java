@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @SuperBuilder
 @Document(collection = "posts")
-public class Post {
+public class Post extends BaseEntity {
     @Id
     String id;
     String companyName;

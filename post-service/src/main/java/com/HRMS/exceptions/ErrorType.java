@@ -25,8 +25,9 @@ public enum ErrorType {
     NAME_IS_NULL(1005,"Name alanı boş geçilemez",HttpStatus.BAD_REQUEST),
     ID_NOT_FOUND(1006,"Aradığınız id ye ait kayıt bulunamadı",HttpStatus.BAD_REQUEST),
     EMPLOYEE_ALREADY_EXIST(1007,"This employee already exist",HttpStatus.BAD_REQUEST),
-    EMPLOYEE_NOT_FOUND(1008,"Çalışan bulunamadı!",HttpStatus.BAD_REQUEST);
+    EMPLOYEE_NOT_FOUND(1008,"Çalışan bulunamadı!",HttpStatus.BAD_REQUEST),
 
+    POST_ALREADY_EXISTS(1009, "Post zaten eklendi.", HttpStatus.BAD_REQUEST);
     
     
     
