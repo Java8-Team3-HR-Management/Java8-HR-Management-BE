@@ -10,8 +10,6 @@ import com.HRMS.repository.ICompanyRepository;
 import com.HRMS.repository.entity.Company;
 import com.HRMS.repository.enums.EStatus;
 import com.HRMS.utils.ServiceManager;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,8 +31,9 @@ public class CompanyService extends ServiceManager<Company,String> {
     Optional<Company> optCom = repository.findAllByCompanyNameAndTaxNumber(dto.getCompanyName(),dto.getTaxNumber());
    if (optCom.isPresent()){
        throw new CompanyException(ErrorType.COMPANY_ALREADY_EXISTS);
-   }
-   Company company= ICompanyMapper.INSTANCE.toCompanyFromDto(dto);
+   }else{
+   Company company= ICompanyMapper.INSTANCE.toCompanyFromDto(dto);}
+
     return true;
 }
 public List<GetAllCompanyResponseDto> getAllCompanies(){
@@ -68,4 +67,7 @@ return companies;
         return true;
     }
 
-}
+
+    }
+
+
