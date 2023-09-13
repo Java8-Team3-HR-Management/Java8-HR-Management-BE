@@ -5,20 +5,28 @@ import com.HRMS.exceptions.AdminException;
 import com.HRMS.exceptions.ErrorType;
 import com.HRMS.mapper.IAdminMapper;
 import com.HRMS.rabbitmq.model.CreateAdminModel;
+
 import com.HRMS.rabbitmq.producer.AdminProducer;
 import com.HRMS.repository.IAdminRepository;
 import com.HRMS.repository.entity.Admin;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+
 public class AdminService  {
     private final IAdminRepository repository;
     private final AdminProducer createAdminProducer;
+
+
+    public AdminService(IAdminRepository repository, AdminProducer createAdminProducer){
+        super();
+        this.repository=repository;
+        this.createAdminProducer=createAdminProducer;
+
+    }
 
 
     public Boolean addAdmin(AddAdminRequestDto dto){
@@ -34,5 +42,8 @@ public class AdminService  {
         return true;
 
     }
+
+
+
 
 }

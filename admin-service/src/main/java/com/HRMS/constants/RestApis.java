@@ -8,4 +8,5 @@ public class RestApis {
     public static final String ADDADMIN="/addadmin";
 
 
+
 }
