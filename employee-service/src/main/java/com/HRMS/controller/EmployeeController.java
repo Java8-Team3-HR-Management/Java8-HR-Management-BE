@@ -3,9 +3,12 @@ package com.HRMS.controller;
 import com.HRMS.dto.request.AddEmployeeRequestDto;
 import com.HRMS.dto.request.ListPermissionsRequestDto;
 import com.HRMS.dto.request.UpdateEmployeeRequestDto;
+import com.HRMS.dto.request.ViewAllEmployeeInfoRequestDto;
 import com.HRMS.dto.response.AddEmployeeResponseDto;
 import com.HRMS.dto.response.ListPermissionsResponseDto;
 import com.HRMS.dto.response.UpdateEmployeeResponseDto;
+import com.HRMS.dto.response.ViewAllEmployeeInfoResponseDto;
+import com.HRMS.exceptions.EmployeeException;
 import com.HRMS.repository.entity.Employee;
 import com.HRMS.services.EmployeeService;
 import jakarta.validation.Valid;
@@ -54,7 +57,10 @@ public class EmployeeController {
         return ResponseEntity.ok(service.updateEmployee(dto));
     }
 
-
+    @GetMapping(VIEWALLEMPLOYEEINFO)
+    public ResponseEntity<List<ViewAllEmployeeInfoResponseDto>> viewAllEmployeeInfo(@RequestBody ViewAllEmployeeInfoRequestDto requestDto) {
+        return ResponseEntity.ok(service.viewAllEmployeeInfo(requestDto));
+    }
 
 
 

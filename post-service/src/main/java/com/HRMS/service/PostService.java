@@ -1,7 +1,9 @@
 package com.HRMS.service;
 
 import com.HRMS.dto.request.AddPostRequestDto;
+import com.HRMS.dto.request.UpdatePostRequestDto;
 import com.HRMS.dto.response.AddPostResponseDto;
+import com.HRMS.dto.response.UpdatePostResponseDto;
 import com.HRMS.exceptions.PostException;
 import com.HRMS.exceptions.ErrorType;
 import com.HRMS.repository.IPostRepository;
@@ -11,6 +13,7 @@ import com.HRMS.utils.ServiceManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -41,7 +44,7 @@ public class PostService extends ServiceManager<Post,String> {
                     .employeeId(requestDto.getEmployeeId())
                     .employeeName(requestDto.getEmployeeName())
                     .status(EStatus.PENDING)
-                    .state().build();
+                    .state(1).build();
 
             post = repository.save(post);
 
@@ -58,6 +61,43 @@ public class PostService extends ServiceManager<Post,String> {
 
             return responseDto;
         }
+
+    public UpdatePostResponseDto updatePost(String postId, UpdatePostRequestDto requestDto) {
+        Optional<Post> postOpt = repository.findById(postId);
+
+        if (postOpt.isPresent()) {
+            Post existingPost = postOpt.get();
+
+            existingPost.setCompanyName(requestDto.getCompanyName());
+            existingPost.setCompanyId(requestDto.getCompanyId());
+            existingPost.setPostSubject(requestDto.getPostSubject());
+            existingPost.setPostContent(requestDto.getPostContent());
+            existingPost.setEmployeeId(requestDto.getEmployeeId());
+            existingPost.setEmployeeName(requestDto.getEmployeeName());
+
+            existingPost = repository.save(existingPost);
+
+            UpdatePostResponseDto responseDto = UpdatePostResponseDto.builder()
+                    .id(existingPost.getId())
+                    .companyName(existingPost.getCompanyName())
+                    .companyId(existingPost.getCompanyId())
+                    .postSubject(existingPost.getPostSubject())
+                    .postContent(existingPost.getPostContent())
+                    .employeeId(existingPost.getEmployeeId())
+                    .employeeName(existingPost.getEmployeeName())
+                    .status(existingPost.getStatus())
+                    .build();
+
+            return responseDto;
+        } else {
+            throw new PostException(ErrorType.POST_NOT_FOUND);
+        }
+    }
+
+
+
+
+
 }
 
 
