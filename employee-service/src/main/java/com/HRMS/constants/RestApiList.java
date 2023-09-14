@@ -17,6 +17,7 @@ public class RestApiList {
     public static final String ADDEMPLOYEE="/addEmployee";
     public static final String PERMISSIONEMPLOYEE=API + VERSION + "/permissionemployee";
     public static final String UPDATEEMPLOYEE= API + VERSION + "/employeeupdate";
+    public static final String VIEWALLEMPLOYEEINFO = API + VERSION + "/viewallemployeeinfo";
 
 
 

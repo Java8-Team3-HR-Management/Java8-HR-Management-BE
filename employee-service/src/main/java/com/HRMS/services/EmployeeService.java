@@ -1,10 +1,9 @@
 package com.HRMS.services;
 
-import com.HRMS.dto.request.AddEmployeeRequestDto;
-import com.HRMS.dto.request.UpdateEmployeeRequestDto;
-import com.HRMS.dto.request.ListPermissionsRequestDto;
+import com.HRMS.dto.request.*;
 import com.HRMS.dto.request.UpdateEmployeeRequestDto;
 import com.HRMS.dto.response.ListPermissionsResponseDto;
+import com.HRMS.dto.response.ViewAllEmployeeInfoResponseDto;
 import com.HRMS.exceptions.EmployeeException;
 import com.HRMS.exceptions.ErrorType;
 import com.HRMS.mapper.IEmployeeMapper;
@@ -25,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.HRMS.utils.RandomPasswordGenerator.*;
 
@@ -105,8 +105,33 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         return true;
     }
 
+    public List<ViewAllEmployeeInfoResponseDto> viewAllEmployeeInfo(ViewAllEmployeeInfoRequestDto requestDto) {
 
+        List<Employee> employees = repository.findByCompanyIdAndDepartment(requestDto.getCompanyId(), requestDto.getDepartment());
+        if( employees.isEmpty()) {
+            throw new EmployeeException(ErrorType.EMPLOYEE_NOT_FOUND);
+        }
 
+        List<ViewAllEmployeeInfoResponseDto> responseDtos = employees.stream()
+                .map(employee -> ViewAllEmployeeInfoResponseDto.builder()
+                                .id(employee.getId())
+                                .nameSurname(employee.getNameSurname())
+                                .email(employee.getEmail())
+                                .companyName(employee.getCompanyName())
+                                .companyEmail(employee.getCompanyEmail())
+                                .birthPlace(employee.getBirthPlace())
+                                .birthDate(employee.getBirthDate())
+                                .department(employee.getDepartment())
+                                .title(employee.getTitle())
+                                .location(employee.getLocation())
+                                .phone(employee.getPhone())
+                                .membershipDate(employee.getMembershipDate())
+                                .salary(employee.getSalary())
+                                .contractStatement(employee.getContractStatement())
+                                .build())
+                     .collect(Collectors.toList());
 
+              return responseDtos;
+         }
+      }
 
-}
