@@ -38,12 +38,8 @@ public class PostController {
     }
 
     @PutMapping(UPDATEPOST)
-    public ResponseEntity<UpdatePostResponseDto> updatePost(@PathVariable String postId, @RequestBody @Valid UpdatePostRequestDto requestDto) {
-        UpdatePostResponseDto responseDto = service.updatePost(postId, requestDto);
-        return ResponseEntity.ok(responseDto);
+    public ResponseEntity<Boolean> updatePost(@RequestBody @Valid UpdatePostRequestDto dto) {
+        return ResponseEntity.ok(service.updatePost(dto));
     }
-
-
-
-
 }
+
