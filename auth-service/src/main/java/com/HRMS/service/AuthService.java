@@ -2,6 +2,7 @@ package com.HRMS.service;
 
 import com.HRMS.dto.request.DoLoginRequestDto;
 import com.HRMS.dto.request.DoRegisterRequestDto;
+import com.HRMS.dto.response.DoLoginResponseDto;
 import com.HRMS.exceptions.AuthException;
 import com.HRMS.exceptions.ErrorType;
 import com.HRMS.manager.IUserManager;
@@ -47,25 +48,40 @@ public class AuthService extends ServiceManager<Auth,Long> {
                 });
 
         Auth auth = IAuthMapper.INSTANCE.authFromDto(dto);
-        repository.save(auth);
+        auth.setRoles(ERole.GUEST);
+        save(auth);
 
         createProfileProducer.sendCreateProfileMessage(
                 CreateProfile.builder()
                         .authid(auth.getId())
                         .email(dto.getEmail())
+                        .nameSurname(dto.getNameSurname())
+                        .password(dto.getPassword())
                         .build()
         );
         return true;
     }
 
-    public String login(DoLoginRequestDto dto) {
-        Optional<Auth> auth = repository.findOptionalByEmail(dto.getEmail());
-
-        if (auth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
-        Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
-        if (token.isEmpty()) throw new AuthException(ErrorType.BAD_REQUEST_ERROR);
-        return token.get();
+    public DoLoginResponseDto login(DoLoginRequestDto dto) {
+        if(dto.getCompanyMail()==null ||!(dto.getEmail()==null)){
+            Optional<Auth> auth = repository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
+            if (auth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
+    Optional<String> userToken= jwtTokenManager.createToken(auth.get().getId(),auth.get().getRoles());
+    if (userToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
+            return DoLoginResponseDto.builder()
+                    .token(userToken.get())
+                    .role(auth.get().getRoles())
+                    .build();}
+         Optional<Auth> empAuth = repository.findOptionalByCompanyEmailAndPassword(dto.getCompanyMail(), dto.getPassword());
+        if (empAuth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
+        Optional<String> empToken= jwtTokenManager.createToken(empAuth.get().getId(),empAuth.get().getRoles());
+        if (empToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
+        return DoLoginResponseDto.builder()
+                .token(empToken.get())
+                .role(empAuth.get().getRoles())
+                .build();
     }
+
 
     public Boolean createEmployee(CreateEmployee employee) {
         // Rabbitten gelen mesajın dataya kaydedilmesi

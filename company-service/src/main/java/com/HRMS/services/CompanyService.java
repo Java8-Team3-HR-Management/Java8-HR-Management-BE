@@ -66,6 +66,15 @@ return companies;
         update(optCom.get());
         return true;
     }
+    public GetAllCompanyResponseDto getCompanyByName(String name){
+        Optional<Company> optCompany = repository.findAllByCompanyName(name);
+            if (optCompany.get().getStatus().equals("PENDING")){
+                throw new CompanyException(ErrorType.COMPANY_NOT_FOUND);
+            }
+        GetAllCompanyResponseDto company = ICompanyMapper.INSTANCE.toGetAllCompanyResponseDtoFromCompany(optCompany.get());
+
+        return company;
+    }
 
 
     }

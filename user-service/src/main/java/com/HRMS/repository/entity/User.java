@@ -12,18 +12,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "quests")
-public class User {
+@Document(collection = "guests")
+public class User extends BaseEntity
+{
     @Id
-    String id;
+    Long id;
     Long authid;
     String nameSurname;
     String email;
     String password;
-    String department;
-    String title;
-    String location;
     @Builder.Default
-    EStatus status= EStatus.PENDING;
+    EStatus status= EStatus.ACTIVE;
 
 }

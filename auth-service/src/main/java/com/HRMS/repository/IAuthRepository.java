@@ -11,6 +11,8 @@ public interface IAuthRepository extends JpaRepository<Auth,Long> {
 
 
     Optional<Auth> findOptionalByEmail(String email);
+    Optional<Auth> findOptionalByEmailAndPassword(String email, String password);
+    Optional<Auth> findOptionalByCompanyEmailAndPassword(String companyEmail, String password);
 
 
 

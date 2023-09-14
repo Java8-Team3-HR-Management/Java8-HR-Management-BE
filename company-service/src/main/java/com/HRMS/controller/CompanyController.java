@@ -60,4 +60,8 @@ public class CompanyController {
                 .result("Please check the details you entered")
                 .build());
     }
+    @GetMapping(GETCOMPANYBYNAME)
+    public ResponseEntity<GetAllCompanyResponseDto> getCompanyByName(@RequestParam String name){
+        return ResponseEntity.ok(service.getCompanyByName(name));
+    }
 }
