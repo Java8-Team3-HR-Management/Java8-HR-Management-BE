@@ -72,7 +72,8 @@ public class AuthService extends ServiceManager<Auth,Long> {
                     .build();}
          Optional<Auth> empAuth = repository.findOptionalByCompanyEmailAndPassword(dto.getCompanyMail(), dto.getPassword());
         if (empAuth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
-        Optional<String> empToken= jwtTokenManager.createToken(empAuth.get().getId(),empAuth.get().getRoles());
+        Long tokenId=Long.parseLong(empAuth.get().getEmployeeId());
+        Optional<String> empToken= jwtTokenManager.createToken(tokenId,empAuth.get().getRoles());
         if (empToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
         return DoLoginResponseDto.builder()
                 .token(empToken.get())
@@ -94,8 +95,9 @@ public class AuthService extends ServiceManager<Auth,Long> {
                     .password(employee.getPassword())
                     .roles(ERole.EMPLOYEE)
                     .companyEmail(employee.getCompanyEmail())
+                    .employeeId(employee.getEmployeeId())
                     .build();
-            repository.save(authEmployee);
+            save(authEmployee);
         }
         return true;
 

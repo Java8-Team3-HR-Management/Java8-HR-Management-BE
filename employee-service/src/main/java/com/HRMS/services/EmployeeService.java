@@ -60,6 +60,7 @@ public class EmployeeService extends ServiceManager<Employee,String> {
                 .email(dto.getEmail())
                 .companyEmail(mailGen)
                 .password(pass)
+                .employeeId(empOpt.get().getId())
                 .build());
         emailProducer.sendMailActivationMessage(SendActivationEmail.builder()
                         .email(dto.getEmail())
