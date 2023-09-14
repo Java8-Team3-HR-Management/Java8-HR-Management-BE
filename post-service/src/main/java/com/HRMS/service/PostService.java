@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class PostService extends ServiceManager<Post,String> {
     private final IPostRepository repository;
     private final IPostMapper mapper;

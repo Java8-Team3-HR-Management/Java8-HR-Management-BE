@@ -53,10 +53,11 @@ public class EmployeeService extends ServiceManager<Employee,String> {
             Employee emp= IEmployeeMapper.INSTANCE.toEmployeeFromDto(dto);
             save(emp);
         }
-        String mailGen= dto.getNameSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
+        String mailGen= dto.getName().toLowerCase().charAt(0)+dto.getSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
         String pass= generateRandomPassword();
         employeeProducer.createEmployeeAtAuth(CreateEmployee.builder()
                 .email(dto.getEmail())
+                .companyEmail(mailGen)
                 .password(pass)
                 .build());
         emailProducer.sendMailActivationMessage(SendActivationEmail.builder()
@@ -75,7 +76,7 @@ public class EmployeeService extends ServiceManager<Employee,String> {
             Employee employee = optionalEmployee.get();
             ListPermissionsResponseDto responseDto = new ListPermissionsResponseDto();
             responseDto.setEmployeeId(employeeId);
-            responseDto.setEmployeeName(employee.getNameSurname());
+            responseDto.setEmployeeName(employee.getName());
 
             return responseDto;
 
@@ -98,7 +99,8 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         if (employee.isEmpty()) {
             throw new EmployeeException(ErrorType.ID_NOT_FOUND);
         }
-        employee.get().setNameSurname(requestDto.getNameSurname());
+        employee.get().setName(requestDto.getName());
+        employee.get().setSurname(requestDto.getSurname());
         employee.get().setEmail(requestDto.getEmail());
         employee.get().setPhone(requestDto.getPhone());
         update(employee.get());
@@ -115,7 +117,8 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         List<ViewAllEmployeeInfoResponseDto> responseDtos = employees.stream()
                 .map(employee -> ViewAllEmployeeInfoResponseDto.builder()
                                 .id(employee.getId())
-                                .nameSurname(employee.getNameSurname())
+                                .name(employee.getName())
+                                .surname(employee.getSurname())
                                 .email(employee.getEmail())
                                 .companyName(employee.getCompanyName())
                                 .companyEmail(employee.getCompanyEmail())
