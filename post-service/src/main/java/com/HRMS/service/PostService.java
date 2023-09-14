@@ -29,41 +29,31 @@ public class PostService extends ServiceManager<Post,String> {
         this.repository = repository;
     }
 
-    public Boolean addPost(AddPostRequestDto requestDto) {
-        Optional<Post> postExists = repository.findByPostSubjectAndPostContent(requestDto.getPostSubject(), requestDto.getPostContent());
+   
+        public Boolean addPost(AddPostRequestDto requestDto) {
+            Optional<Post> postExists = repository.findByPostSubjectAndPostContent(requestDto.getPostSubject(), requestDto.getPostContent());
 
-        if (postExists.isPresent()) {
+            if (postExists.isPresent()) {
 
-            throw new PostException(ErrorType.POST_ALREADY_EXISTS);
+                throw new PostException(ErrorType.POST_ALREADY_EXISTS);
+            }
+            Post post = IPostMapper.INSTANCE.toPostFromDto(requestDto);
+            post.setStatus(EStatus.PENDING);
+            save(post);
+         return true;
+         
         }
-        Post post = IPostMapper.INSTANCE.toPostFromDto(requestDto);
-        post.setStatus(EStatus.PENDING);
-        Post savedPost = repository.save(post);
-
-        if (savedPost != null) {
-            AddPostResponseDto responseDto = AddPostResponseDto.builder()
-                    .result("Post başarıyla kaydedildi.")
-                    .status(savedPost.getStatus())
-                    .build();
-
-            return true;
-        }
-        return false;
-    }
+        
+    
     public Boolean updatePost(UpdatePostRequestDto requestDto) {
         Optional<Post> postExists = repository.findById(requestDto.getPostId());
-        if (postExists.isPresent()) {
+        if (!postExists.isPresent()) {
             throw new PostException(ErrorType.ID_NOT_FOUND);
         }
         Post existingPost = postExists.get();
-        existingPost.setUpdateDate(LocalDate.now());
-
-        Post updatedPost = update(existingPost);
-
-        return true;
-
-
-
+        existingPost.setStatus(EStatus.APPROVED);
+        update(post);
+      return true;
     }
 
 

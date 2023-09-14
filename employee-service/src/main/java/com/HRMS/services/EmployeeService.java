@@ -109,7 +109,9 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         return true;
     }
 
+
     public Optional<ViewAllEmployeeInfoResponseDto>viewAllEmployeeInfo(ViewAllEmployeeInfoRequestDto requestDto) {
+
         Optional<Employee> employees = repository.findByCompanyIdAndDepartment(requestDto.getCompanyId(), requestDto.getDepartment());
 
         if (!employees.isPresent()) {
@@ -122,7 +124,9 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         return Optional.of(responseDto);
     }
 
+
 }
+
 
 
 

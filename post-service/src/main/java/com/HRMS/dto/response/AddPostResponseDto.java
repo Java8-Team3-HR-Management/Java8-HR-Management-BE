@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 
 public class AddPostResponseDto {
+
     private String result;
     private EStatus status;
 
