@@ -1,9 +1,15 @@
 package com.HRMS.utility;
 
+import com.HRMS.exceptions.AuthException;
+import com.HRMS.exceptions.ErrorType;
+import com.HRMS.repository.enums.ERole;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -12,20 +18,24 @@ import java.util.Optional;
 @Service
 public class JwtTokenManager {
 
-    private final long exDate = 1000L*60; // 20 saniye
-    private final String sifreAnahtari = "bşfb546-5436*-4--56ı987845ygyhı45*096845096";
-    public Optional<String> createToken(Long id){
+    private final long exDate = 3600000; // 1 hr
+    @Value("${secretkey}")
+    String secretKey;
+    @Value("${audience}")
+    String audience;
+    @Value("${issuer}")
+    String issuer;
+    public Optional<String> createToken(Long id, ERole eRole){
         try{
             String token;
             token = JWT.create()
-                    .withAudience()
-
-                    .withIssuer(" ")
-                    .withClaim("id",id)
-                    .withClaim("islemturu","genel")
+                    .withAudience(audience)
+                    .withIssuer(issuer)
                     .withIssuedAt(new Date())
                     .withExpiresAt(new Date(System.currentTimeMillis() + exDate))
-                    .sign(Algorithm.HMAC512(sifreAnahtari));
+                    .withClaim("id", id)
+                    .withClaim("role", eRole.toString())
+                    .sign(Algorithm.HMAC512(secretKey));
             return Optional.of(token);
         }catch (Exception e){
             return Optional.empty();
@@ -34,9 +44,10 @@ public class JwtTokenManager {
 
     public Optional<Long> getByIdFromToken(String token){
         try{
-            Algorithm algorithm = Algorithm.HMAC512(sifreAnahtari);
+            Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer(" ")
+                    .withIssuer(issuer)
+                    .withAudience(audience)
                     .build();
             DecodedJWT decodedJWT = verifier.verify(token);
             if(decodedJWT==null)
@@ -45,6 +56,19 @@ public class JwtTokenManager {
             return Optional.of(id);
         }catch (Exception e){
             return Optional.empty();
+        }
+    }
+    public Optional<String> getRoleFromToken(String token){
+        try{Algorithm algorithm = Algorithm.HMAC512(secretKey);
+            JWTVerifier verifier=JWT.require(algorithm).withAudience(audience).withIssuer(issuer).build();
+            DecodedJWT decodeJWT=verifier.verify(token);
+            if(decodeJWT==null){
+                throw new AuthException(ErrorType.INVALID_TOKEN);
+            }
+             String role=decodeJWT.getClaim("role").asString();
+            return Optional.of(role);
+        }catch (Exception e){
+            throw new AuthException(ErrorType.INVALID_TOKEN);
         }
     }
 

@@ -16,6 +16,7 @@ public class DoLoginRequestDto {
     String token;
     String email;
     String password;
+    String companyMail;
 
 }
 

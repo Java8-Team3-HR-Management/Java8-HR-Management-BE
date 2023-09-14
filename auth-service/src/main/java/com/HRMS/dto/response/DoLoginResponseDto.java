@@ -1,5 +1,6 @@
 package com.HRMS.dto.response;
 
+import com.HRMS.repository.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DoLoginResponseDto {
 
-    Integer status;
-    String result;
-    String token; // JWT Token
+    String token;
+    ERole role;
 
 }

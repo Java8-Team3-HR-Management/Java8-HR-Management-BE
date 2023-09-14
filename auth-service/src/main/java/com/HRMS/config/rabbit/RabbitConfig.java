@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
     private final String directExchangeAuth = "direct-exchange-auth";
-    private final String queueAuthCreateProfile = "queue-auth-create-profile";
+    private final String queueAuthCreateProfile = "queue-create-guest";
     private final String routingKeyAuth = "routing-key-auth-create-profile";
 
     // Rabbit config settings for create employee at employee service

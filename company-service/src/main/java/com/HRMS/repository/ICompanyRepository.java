@@ -12,4 +12,5 @@ public interface ICompanyRepository extends MongoRepository<Company, String> {
     Optional<Company> findAllByCompanyNameAndTaxNumber(String companyName,Long taxNumber);
     Optional<List<Company>> findAllByStatus(String status);
     Optional<Company> findAllByTaxNumber(Long taxNumber);
+    Optional<Company> findAllByCompanyName(String companyName);
 }

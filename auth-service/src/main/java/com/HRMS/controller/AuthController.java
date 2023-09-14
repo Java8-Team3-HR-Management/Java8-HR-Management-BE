@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Optional;
+
 import static com.HRMS.constants.RestApis.AUTH;
 import static com.HRMS.constants.RestApis.*;
 @RestController
@@ -22,20 +24,6 @@ import static com.HRMS.constants.RestApis.*;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    private final CreateProfileProducer createProfileProducer;
-
-
-    @GetMapping("/testrabbit")
-    public ResponseEntity<Void> testRabbitSendMessage(String username,String email,Long authid){
-        createProfileProducer.sendCreateProfileMessage(
-                CreateProfile.builder()
-                        .authid(authid)
-                        .email(email)
-                        .username(username)
-                        .build()
-        );
-        return ResponseEntity.ok().build();
-    }
 
     @PostMapping(REGISTER)
     @CrossOrigin("*")
@@ -57,12 +45,8 @@ public class AuthController {
     @PostMapping(LOGIN)
     @CrossOrigin("*")
     public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
-        String token = authService.login(dto);
-        return ResponseEntity.ok(DoLoginResponseDto.builder()
-                .status(200)
-                .result("Giriş İşlemi Başarılı")
-                .token(token)
-                .build());
+      return ResponseEntity.ok(authService.login(dto));
+
     }
 
 

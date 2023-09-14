@@ -28,4 +28,5 @@ public class DoRegisterRequestDto {
             message = "Şifre enaz 8 karakter olmalı, içinde en az bir büyük bir küçük harf sayı ve rakam olmalıdır.",
             regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=*!])(?=\\S+$).{8,}$")
     String passwordConfirm;
+    String nameSurname;
 }

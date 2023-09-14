@@ -18,6 +18,7 @@ import com.HRMS.repository.entity.Employee;
 import com.HRMS.utils.RandomPasswordGenerator;
 import com.HRMS.utils.ServiceManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import org.springframework.stereotype.Service;
@@ -28,8 +29,6 @@ import java.util.Optional;
 import static com.HRMS.utils.RandomPasswordGenerator.*;
 
 @Service
-
-
 public class EmployeeService extends ServiceManager<Employee,String> {
 
     private final IEmployeeRepository repository;
