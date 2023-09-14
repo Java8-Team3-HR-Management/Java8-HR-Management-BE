@@ -1,6 +1,7 @@
 package com.HRMS.mapper;
 
 import com.HRMS.dto.request.AddEmployeeRequestDto;
+import com.HRMS.dto.response.ViewAllEmployeeInfoResponseDto;
 import com.HRMS.repository.entity.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -11,5 +12,6 @@ public interface IEmployeeMapper {
     IEmployeeMapper INSTANCE = Mappers.getMapper(IEmployeeMapper.class);
 
     Employee toEmployeeFromDto(final AddEmployeeRequestDto dto);
+    ViewAllEmployeeInfoResponseDto toViewAllEmployeeInfoResponseDto(Employee employee);
 
 }

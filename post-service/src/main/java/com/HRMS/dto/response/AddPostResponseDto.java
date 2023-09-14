@@ -13,13 +13,7 @@ import lombok.NoArgsConstructor;
 
 
 public class AddPostResponseDto {
-    private String id;
-    private String companyName;
-    private String companyId;
-    private String postSubject;
-    private String postContent;
-    private String employeeId;
-    private String employeeName;
+
     private String result;
     private EStatus status;
 

@@ -13,5 +13,6 @@ public interface IPostRepository extends MongoRepository<Post, String> {
 
     Optional<Post> findByPostSubjectAndPostContent(String postSubject, String postContent);
     Optional<List<Post>> findAllByStatus(String status);
+    Optional<Post> findById(String id);
 
 }
