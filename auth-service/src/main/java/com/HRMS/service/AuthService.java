@@ -5,7 +5,6 @@ import com.HRMS.dto.request.DoRegisterRequestDto;
 import com.HRMS.dto.response.DoLoginResponseDto;
 import com.HRMS.exceptions.AuthException;
 import com.HRMS.exceptions.ErrorType;
-import com.HRMS.manager.IUserManager;
 import com.HRMS.mapper.IAuthMapper;
 import com.HRMS.rabbitmq.model.CreateEmployee;
 import com.HRMS.rabbitmq.model.CreateProfile;
@@ -23,17 +22,16 @@ import java.util.Optional;
 
 public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository repository;
-    private final IUserManager userManager;
     private final CreateProfileProducer createProfileProducer;
     private final JwtTokenManager jwtTokenManager;
 
 
 
-    public AuthService(IAuthRepository repository, IUserManager userManager,
+    public AuthService(IAuthRepository repository,
                        CreateProfileProducer createProfileProducer, JwtTokenManager jwtTokenManager) {
         super(repository);
         this.repository = repository;
-        this.userManager = userManager;
+
         this.createProfileProducer = createProfileProducer;
         this.jwtTokenManager = jwtTokenManager;
 
