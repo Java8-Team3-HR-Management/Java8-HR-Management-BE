@@ -57,10 +57,12 @@ public class EmployeeController {
         return ResponseEntity.ok(service.updateEmployee(dto));
     }
 
-    @GetMapping(VIEWALLEMPLOYEEINFO)
-    public ResponseEntity<List<ViewAllEmployeeInfoResponseDto>> viewAllEmployeeInfo(@RequestBody ViewAllEmployeeInfoRequestDto requestDto) {
-        return ResponseEntity.ok(service.viewAllEmployeeInfo(requestDto));
+    @PostMapping(VIEWALLEMPLOYEEINFO)
+    public ResponseEntity<Optional<ViewAllEmployeeInfoResponseDto>> viewAllEmployeeInfo(@RequestBody ViewAllEmployeeInfoRequestDto requestDto) {
+        Optional<ViewAllEmployeeInfoResponseDto> employees = service.viewAllEmployeeInfo(requestDto);
+        return ResponseEntity.ok(employees);
     }
+
 
 
 

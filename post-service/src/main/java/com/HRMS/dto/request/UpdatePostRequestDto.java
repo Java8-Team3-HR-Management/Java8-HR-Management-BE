@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class UpdatePostRequestDto {
+    private String postId;
     private String companyName;
     private String companyId;
     private String postSubject;
