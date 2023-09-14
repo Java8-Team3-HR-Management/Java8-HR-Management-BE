@@ -1,20 +1,15 @@
-package com.HRMS.repository.entity;
+package com.HRMS.dto.request;
 
-
-import com.HRMS.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Manager extends BaseEntity {
-    @Id
-    String id;
+public class AddManagerRequestDto {
     Long companyId;
     String name;
     String surname;
@@ -23,6 +18,4 @@ public class Manager extends BaseEntity {
     String password;
     String title;
     Long salary;
-    EStatus status;
-
 }

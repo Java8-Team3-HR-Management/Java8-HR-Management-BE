@@ -22,6 +22,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,11 +54,13 @@ public class EmployeeService extends ServiceManager<Employee,String> {
             Employee emp= IEmployeeMapper.INSTANCE.toEmployeeFromDto(dto);
             save(emp);
         }
-        String mailGen= dto.getNameSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
+        String mailGen= dto.getName().toLowerCase().charAt(0)+dto.getSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
         String pass= generateRandomPassword();
         employeeProducer.createEmployeeAtAuth(CreateEmployee.builder()
                 .email(dto.getEmail())
+                .companyEmail(mailGen)
                 .password(pass)
+                .employeeId(empOpt.get().getId())
                 .build());
         emailProducer.sendMailActivationMessage(SendActivationEmail.builder()
                         .email(dto.getEmail())
@@ -75,7 +78,7 @@ public class EmployeeService extends ServiceManager<Employee,String> {
             Employee employee = optionalEmployee.get();
             ListPermissionsResponseDto responseDto = new ListPermissionsResponseDto();
             responseDto.setEmployeeId(employeeId);
-            responseDto.setEmployeeName(employee.getNameSurname());
+            responseDto.setEmployeeName(employee.getName());
 
             return responseDto;
 
@@ -94,44 +97,37 @@ public class EmployeeService extends ServiceManager<Employee,String> {
 
 
     public Boolean updateEmployee(UpdateEmployeeRequestDto requestDto) {
-        Optional<Employee> employee = repository.findById(requestDto.getEmployeeId());
-        if (employee.isEmpty()) {
+        Optional<Employee> employeeExists = repository.findById(requestDto.getEmployeeId());
+        if (employeeExists.isPresent()) {
             throw new EmployeeException(ErrorType.ID_NOT_FOUND);
         }
-        employee.get().setNameSurname(requestDto.getNameSurname());
-        employee.get().setEmail(requestDto.getEmail());
-        employee.get().setPhone(requestDto.getPhone());
-        update(employee.get());
+        Employee existingEmployee = employeeExists.get();
+        existingEmployee.setUpdateDate(LocalDate.now());
+
+        Employee updatedEmployee = update(existingEmployee);
+
         return true;
     }
 
-    public List<ViewAllEmployeeInfoResponseDto> viewAllEmployeeInfo(ViewAllEmployeeInfoRequestDto requestDto) {
 
-        List<Employee> employees = repository.findByCompanyIdAndDepartment(requestDto.getCompanyId(), requestDto.getDepartment());
-        if( employees.isEmpty()) {
+    public Optional<ViewAllEmployeeInfoResponseDto>viewAllEmployeeInfo(ViewAllEmployeeInfoRequestDto requestDto) {
+
+        Optional<Employee> employees = repository.findByCompanyIdAndDepartment(requestDto.getCompanyId(), requestDto.getDepartment());
+
+        if (!employees.isPresent()) {
             throw new EmployeeException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
 
-        List<ViewAllEmployeeInfoResponseDto> responseDtos = employees.stream()
-                .map(employee -> ViewAllEmployeeInfoResponseDto.builder()
-                                .id(employee.getId())
-                                .nameSurname(employee.getNameSurname())
-                                .email(employee.getEmail())
-                                .companyName(employee.getCompanyName())
-                                .companyEmail(employee.getCompanyEmail())
-                                .birthPlace(employee.getBirthPlace())
-                                .birthDate(employee.getBirthDate())
-                                .department(employee.getDepartment())
-                                .title(employee.getTitle())
-                                .location(employee.getLocation())
-                                .phone(employee.getPhone())
-                                .membershipDate(employee.getMembershipDate())
-                                .salary(employee.getSalary())
-                                .contractStatement(employee.getContractStatement())
-                                .build())
-                     .collect(Collectors.toList());
+        Employee employee = employees.get();
+        ViewAllEmployeeInfoResponseDto responseDto = IEmployeeMapper.INSTANCE.toViewAllEmployeeInfoResponseDto(employee);
 
-              return responseDtos;
-         }
-      }
+        return Optional.of(responseDto);
+    }
+
+
+}
+
+
+
+
 

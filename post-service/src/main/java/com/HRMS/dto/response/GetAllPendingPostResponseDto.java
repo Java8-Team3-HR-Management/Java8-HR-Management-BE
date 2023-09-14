@@ -6,15 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Builder
-
-
-public class AddPostResponseDto {
-
-    private String result;
-    private EStatus status;
-
+public class GetAllPendingPostResponseDto {
+    String companyName;
+    String postSubject;
+    String postContent;
+    String employeeName;
+    EStatus status;
 }

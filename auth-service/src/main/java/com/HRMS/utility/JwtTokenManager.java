@@ -19,11 +19,11 @@ import java.util.Optional;
 public class JwtTokenManager {
 
     private final long exDate = 3600000; // 1 hr
-    @Value("${secretkey}")
+    @Value("${jwt.secretkey}")
     String secretKey;
-    @Value("${audience}")
+    @Value("${jwt.audience}")
     String audience;
-    @Value("${issuer}")
+    @Value("${jwt.issuer}")
     String issuer;
     public Optional<String> createToken(Long id, ERole eRole){
         try{
