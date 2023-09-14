@@ -14,7 +14,8 @@ import java.time.LocalDate;
 @Builder
 public class AddEmployeeRequestDto {
     String companyid;
-    String nameSurname;
+    String name;
+    String surname;
     String email;
     String companyName;
     String companyEmail;

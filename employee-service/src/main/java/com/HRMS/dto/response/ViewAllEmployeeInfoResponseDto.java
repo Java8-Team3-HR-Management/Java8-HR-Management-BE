@@ -18,7 +18,8 @@ public class ViewAllEmployeeInfoResponseDto {
     private String id;
     private Long authId;
     private String companyId;
-    private String nameSurname;
+    private String name;
+    private String surname;
     private String email;
     private String companyName;
     private String companyEmail;

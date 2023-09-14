@@ -5,7 +5,6 @@ import com.HRMS.dto.request.DoRegisterRequestDto;
 import com.HRMS.dto.response.DoLoginResponseDto;
 import com.HRMS.exceptions.AuthException;
 import com.HRMS.exceptions.ErrorType;
-import com.HRMS.manager.IUserManager;
 import com.HRMS.mapper.IAuthMapper;
 import com.HRMS.rabbitmq.model.CreateEmployee;
 import com.HRMS.rabbitmq.model.CreateProfile;
@@ -23,17 +22,16 @@ import java.util.Optional;
 
 public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository repository;
-    private final IUserManager userManager;
     private final CreateProfileProducer createProfileProducer;
     private final JwtTokenManager jwtTokenManager;
 
 
 
-    public AuthService(IAuthRepository repository, IUserManager userManager,
+    public AuthService(IAuthRepository repository,
                        CreateProfileProducer createProfileProducer, JwtTokenManager jwtTokenManager) {
         super(repository);
         this.repository = repository;
-        this.userManager = userManager;
+
         this.createProfileProducer = createProfileProducer;
         this.jwtTokenManager = jwtTokenManager;
 
@@ -74,7 +72,8 @@ public class AuthService extends ServiceManager<Auth,Long> {
                     .build();}
          Optional<Auth> empAuth = repository.findOptionalByCompanyEmailAndPassword(dto.getCompanyMail(), dto.getPassword());
         if (empAuth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
-        Optional<String> empToken= jwtTokenManager.createToken(empAuth.get().getId(),empAuth.get().getRoles());
+        Long tokenId=Long.parseLong(empAuth.get().getEmployeeId());
+        Optional<String> empToken= jwtTokenManager.createToken(tokenId,empAuth.get().getRoles());
         if (empToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
         return DoLoginResponseDto.builder()
                 .token(empToken.get())
@@ -96,8 +95,9 @@ public class AuthService extends ServiceManager<Auth,Long> {
                     .password(employee.getPassword())
                     .roles(ERole.EMPLOYEE)
                     .companyEmail(employee.getCompanyEmail())
+                    .employeeId(employee.getEmployeeId())
                     .build();
-            repository.save(authEmployee);
+            save(authEmployee);
         }
         return true;
 

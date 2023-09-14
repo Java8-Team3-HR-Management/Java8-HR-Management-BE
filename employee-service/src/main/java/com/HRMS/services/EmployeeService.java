@@ -54,11 +54,13 @@ public class EmployeeService extends ServiceManager<Employee,String> {
             Employee emp= IEmployeeMapper.INSTANCE.toEmployeeFromDto(dto);
             save(emp);
         }
-        String mailGen= dto.getNameSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
+        String mailGen= dto.getName().toLowerCase().charAt(0)+dto.getSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
         String pass= generateRandomPassword();
         employeeProducer.createEmployeeAtAuth(CreateEmployee.builder()
                 .email(dto.getEmail())
+                .companyEmail(mailGen)
                 .password(pass)
+                .employeeId(empOpt.get().getId())
                 .build());
         emailProducer.sendMailActivationMessage(SendActivationEmail.builder()
                         .email(dto.getEmail())
@@ -76,7 +78,7 @@ public class EmployeeService extends ServiceManager<Employee,String> {
             Employee employee = optionalEmployee.get();
             ListPermissionsResponseDto responseDto = new ListPermissionsResponseDto();
             responseDto.setEmployeeId(employeeId);
-            responseDto.setEmployeeName(employee.getNameSurname());
+            responseDto.setEmployeeName(employee.getName());
 
             return responseDto;
 
@@ -107,7 +109,9 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         return true;
     }
 
-    public Optional<ViewAllEmployeeInfoResponseDto> viewAllEmployeeInfo(ViewAllEmployeeInfoRequestDto requestDto) {
+
+    public Optional<ViewAllEmployeeInfoResponseDto>viewAllEmployeeInfo(ViewAllEmployeeInfoRequestDto requestDto) {
+
         Optional<Employee> employees = repository.findByCompanyIdAndDepartment(requestDto.getCompanyId(), requestDto.getDepartment());
 
         if (!employees.isPresent()) {
@@ -120,5 +124,10 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         return Optional.of(responseDto);
     }
 
-      }
+
+}
+
+
+
+
 

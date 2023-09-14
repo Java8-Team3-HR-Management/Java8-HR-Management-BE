@@ -14,4 +14,5 @@ public interface IEmployeeRepository extends MongoRepository<Employee,String> {
     Optional<Employee> findByCompanyIdAndDepartment(String companyId, String department);
     Optional<Employee> findById(String id);
 
+
 }

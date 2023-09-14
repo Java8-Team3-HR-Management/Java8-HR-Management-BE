@@ -14,5 +14,6 @@ public class CreateEmployee implements Serializable {
     String email;
     String companyEmail;
     String password;
+    String employeeId;
 
 }
