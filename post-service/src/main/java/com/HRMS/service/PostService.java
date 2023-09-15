@@ -52,7 +52,7 @@ public class PostService extends ServiceManager<Post,String> {
         }
         Post existingPost = postExists.get();
         existingPost.setStatus(EStatus.APPROVED);
-        update(post);
+        update(existingPost);
       return true;
     }
 

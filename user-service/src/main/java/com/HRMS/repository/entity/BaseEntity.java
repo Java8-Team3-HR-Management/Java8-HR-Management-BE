@@ -18,7 +18,7 @@ public class BaseEntity {
 
     boolean state;
 
-    LocalDate createdate;
+    LocalDate createDate;
 
-    LocalDate updatedate;
+    LocalDate updateDate;
 }

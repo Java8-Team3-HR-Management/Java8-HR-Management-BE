@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class AddEmployeeRequestDto {
-    String companyid;
+    String companyId;
     String name;
     String surname;
     String email;

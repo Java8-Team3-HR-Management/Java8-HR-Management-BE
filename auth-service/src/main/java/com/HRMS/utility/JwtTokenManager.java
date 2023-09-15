@@ -25,7 +25,7 @@ public class JwtTokenManager {
     String audience;
     @Value("${jwt.issuer}")
     String issuer;
-    public Optional<String> createToken(Long id, ERole eRole){
+    public Optional<String> createToken(String id, ERole eRole){
         try{
             String token;
             token = JWT.create()

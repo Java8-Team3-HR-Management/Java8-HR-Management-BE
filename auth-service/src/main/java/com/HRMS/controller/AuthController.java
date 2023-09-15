@@ -26,7 +26,6 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(REGISTER)
-    @CrossOrigin("*")
     public ResponseEntity<DoRegisterResponseDto> doRegister(@RequestBody @Valid DoRegisterRequestDto dto){
         Boolean isRegister = authService.register(dto);
         if(isRegister)
@@ -43,7 +42,6 @@ public class AuthController {
     }
 
     @PostMapping(LOGIN)
-    @CrossOrigin("*")
     public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
       return ResponseEntity.ok(authService.login(dto));
 

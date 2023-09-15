@@ -24,6 +24,7 @@ import static com.HRMS.constants.RestApiList.*;
 @RestController
 @RequestMapping(EMPLOYEE)
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class EmployeeController {
     private final EmployeeService service;
     @PostMapping(ADDEMPLOYEE)
@@ -47,7 +48,7 @@ public class EmployeeController {
         request.setEmployeeId(employeeId);
         return service.listPermissionsByEmployeeId(request);
     }
-    @GetMapping("/findAll{companyName}")
+    @GetMapping("/findAll/{companyName}")
     public ResponseEntity<Optional<List<Employee>>> findAll(@PathVariable String companyName) {
         return ResponseEntity.ok(service.findOptionalByCompanyName(companyName));
     }
@@ -61,6 +62,10 @@ public class EmployeeController {
     public ResponseEntity<Optional<ViewAllEmployeeInfoResponseDto>> viewAllEmployeeInfo(@RequestBody ViewAllEmployeeInfoRequestDto requestDto) {
         Optional<ViewAllEmployeeInfoResponseDto> employees = service.viewAllEmployeeInfo(requestDto);
         return ResponseEntity.ok(employees);
+    }  @GetMapping(GETEMPLOYEEBYID+"/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
+       Employee employee =  service.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
     }
 
 

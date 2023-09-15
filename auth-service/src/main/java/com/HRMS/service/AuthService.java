@@ -20,11 +20,10 @@ import java.util.Optional;
 
 @Service
 
-public class AuthService extends ServiceManager<Auth,Long> {
+public class AuthService extends ServiceManager<Auth, Long> {
     private final IAuthRepository repository;
     private final CreateProfileProducer createProfileProducer;
     private final JwtTokenManager jwtTokenManager;
-
 
 
     public AuthService(IAuthRepository repository,
@@ -61,36 +60,43 @@ public class AuthService extends ServiceManager<Auth,Long> {
     }
 
     public DoLoginResponseDto login(DoLoginRequestDto dto) {
-        if(dto.getCompanyMail()==null ||!(dto.getEmail()==null)){
+        System.out.println(dto);
+        if (dto.getCompanyMail() == null && dto.getEmail() != null) {
+            System.out.println(" if");
             Optional<Auth> auth = repository.findOptionalByEmailAndPassword(dto.getEmail(), dto.getPassword());
             if (auth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
-    Optional<String> userToken= jwtTokenManager.createToken(auth.get().getId(),auth.get().getRoles());
-    if (userToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
+            Optional<String> userToken = jwtTokenManager.createToken(String.valueOf(auth.get().getId()), auth.get().getRoles());
+            if (userToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
             return DoLoginResponseDto.builder()
                     .token(userToken.get())
                     .role(auth.get().getRoles())
-                    .build();}
-         Optional<Auth> empAuth = repository.findOptionalByCompanyEmailAndPassword(dto.getCompanyMail(), dto.getPassword());
-        if (empAuth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
-        Long tokenId=Long.parseLong(empAuth.get().getEmployeeId());
-        Optional<String> empToken= jwtTokenManager.createToken(tokenId,empAuth.get().getRoles());
-        if (empToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
-        return DoLoginResponseDto.builder()
-                .token(empToken.get())
-                .role(empAuth.get().getRoles())
-                .build();
+                    .build();
+        } else if (dto.getCompanyMail() != null && dto.getEmail() == null) {
+            System.out.println("Else if");
+            Optional<Auth> empAuth = repository.findOptionalByCompanyEmailAndPassword(dto.getCompanyMail(), dto.getPassword());
+            if (empAuth.isEmpty()) throw new AuthException(ErrorType.DOLOGIN_INVALID_USERNAME_PASSWORD);
+            String tokenId = empAuth.get().getEmployeeId();
+            Optional<String> empToken = jwtTokenManager.createToken(tokenId, empAuth.get().getRoles());
+            if (empToken.isEmpty()) throw new AuthException(ErrorType.INVALID_TOKEN);
+            return DoLoginResponseDto.builder()
+                    .token(empToken.get())
+                    .role(empAuth.get().getRoles())
+                    .build();
+        }else{
+            throw new AuthException(ErrorType.REQUIRED_FIELD);
+        }
     }
 
 
     public Boolean createEmployee(CreateEmployee employee) {
         // Rabbitten gelen mesajın dataya kaydedilmesi
         Optional<Auth> empAuth = repository.findOptionalByEmail(employee.getEmail());
-      //  if (empAuth.isPresent()) {
+        //  if (empAuth.isPresent()) {
         //    throw new AuthException(ErrorType.MAIL_ALREADY_HAS_BEEN);
         //}
 
         if (empAuth.isEmpty()) {
-        Auth authEmployee = Auth.builder()
+            Auth authEmployee = Auth.builder()
                     .email(employee.getEmail())
                     .password(employee.getPassword())
                     .roles(ERole.EMPLOYEE)
