@@ -52,21 +52,28 @@ public class EmployeeService extends ServiceManager<Employee,String> {
             throw new EmployeeException(ErrorType.EMPLOYEE_ALREADY_EXIST);
         } else {
             Employee emp= IEmployeeMapper.INSTANCE.toEmployeeFromDto(dto);
+            String mailGen= dto.getName().toLowerCase().charAt(0)+dto.getSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
+            emp.setCompanyEmail(mailGen);
             save(emp);
+
+            String pass= generateRandomPassword();
+            System.out.println("Auth a gider"+ mailGen);
+            System.out.println("Maile a gider"+ pass);
+            employeeProducer.createEmployeeAtAuth(CreateEmployee.builder()
+                    .email(dto.getEmail())
+                    .companyEmail(mailGen)
+                    .password(pass)
+                    .employeeId(emp.getId())
+                    .build());
+
+            emailProducer.sendMailActivationMessage(SendActivationEmail.builder()
+                    .email(dto.getEmail())
+                    .companyMail(mailGen)
+                    .password(pass)
+                    .build());
         }
-        String mailGen= dto.getName().toLowerCase().charAt(0)+dto.getSurname().toLowerCase().trim()+"@"+dto.getCompanyName().toLowerCase().trim()+".com";
-        String pass= generateRandomPassword();
-        employeeProducer.createEmployeeAtAuth(CreateEmployee.builder()
-                .email(dto.getEmail())
-                .companyEmail(mailGen)
-                .password(pass)
-                .employeeId(empOpt.get().getId())
-                .build());
-        emailProducer.sendMailActivationMessage(SendActivationEmail.builder()
-                        .email(dto.getEmail())
-                        .companyMail(mailGen)
-                        .password(pass)
-                .build());
+
+
     return true;
     }
 
@@ -97,11 +104,15 @@ public class EmployeeService extends ServiceManager<Employee,String> {
 
 
     public Boolean updateEmployee(UpdateEmployeeRequestDto requestDto) {
-        Optional<Employee> employeeExists = repository.findById(requestDto.getEmployeeId());
-        if (employeeExists.isPresent()) {
+        Optional<Employee> employeeExists = repository.findById(requestDto.getId());
+        if (employeeExists.isEmpty()) {
             throw new EmployeeException(ErrorType.ID_NOT_FOUND);
         }
         Employee existingEmployee = employeeExists.get();
+        existingEmployee.setName(requestDto.getName());
+        existingEmployee.setSurname(requestDto.getSurname());
+        existingEmployee.setEmail(requestDto.getEmail());
+        existingEmployee.setPhone(requestDto.getPhone());
         existingEmployee.setUpdateDate(LocalDate.now());
 
         Employee updatedEmployee = update(existingEmployee);
@@ -122,6 +133,13 @@ public class EmployeeService extends ServiceManager<Employee,String> {
         ViewAllEmployeeInfoResponseDto responseDto = IEmployeeMapper.INSTANCE.toViewAllEmployeeInfoResponseDto(employee);
 
         return Optional.of(responseDto);
+    }
+
+    public Employee getEmployeeById(String id){
+        Optional<Employee> optionalEmployee = findById(id);
+        if(optionalEmployee.isEmpty())
+            throw new EmployeeException(ErrorType.EMPLOYEE_NOT_FOUND);
+        return optionalEmployee.get();
     }
 
 

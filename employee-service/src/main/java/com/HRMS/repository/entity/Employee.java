@@ -20,7 +20,7 @@ public class Employee extends BaseEntity {
     @Id
     String id;
     Long authid;
-    String companyid;
+    String companyId;
     String name;
     String surname;
     String email;

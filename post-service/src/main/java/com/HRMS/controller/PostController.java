@@ -18,6 +18,7 @@ import static com.HRMS.constants.RestApiList.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(POST)
+@CrossOrigin("*")
 public class PostController {
     private final PostService service;
 

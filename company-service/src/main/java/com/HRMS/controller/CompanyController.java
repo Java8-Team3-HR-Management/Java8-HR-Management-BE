@@ -19,6 +19,7 @@ import static com.HRMS.constants.RestApiList.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(COMPANY)
+@CrossOrigin("*")
 public class CompanyController {
     private final CompanyService service;
 

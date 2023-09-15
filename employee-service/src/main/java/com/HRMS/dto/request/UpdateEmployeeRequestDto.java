@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UpdateEmployeeRequestDto {
 
-    private String employeeId;
+    private String id;
     private String name;
     private String surname;
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Geçerli bir e-posta adresi giriniz.")

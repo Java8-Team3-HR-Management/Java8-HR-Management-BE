@@ -18,4 +18,6 @@ public interface IPostMapper {
 
     Post toPostFromDto(final AddPostRequestDto dto);
 
+    GetAllPendingPostResponseDto toGetAllPendingResponseDtoFromPost(final Post post);
+
 }

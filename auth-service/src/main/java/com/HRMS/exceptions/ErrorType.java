@@ -16,7 +16,8 @@ public enum ErrorType {
     DOLOGIN_INVALID_USERNAME_PASSWORD(1004,"Kullanıcı adı ya da şifre hatalıdır",HttpStatus.BAD_REQUEST),
     NAME_IS_NULL(1005,"Name alanı boş geçilemez",HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(1006,"Geçersiz token",HttpStatus.BAD_REQUEST),
-    MAIL_ALREADY_HAS_BEEN(1007,"Mail addrees alreadly has been ",HttpStatus.BAD_REQUEST);
+    MAIL_ALREADY_HAS_BEEN(1007,"Mail addrees alreadly has been ",HttpStatus.BAD_REQUEST),
+    REQUIRED_FIELD(1008,"Zorunlu alanlar hatalı gelmekte",HttpStatus.BAD_REQUEST);
 
 
 
