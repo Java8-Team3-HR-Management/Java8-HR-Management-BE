@@ -14,6 +14,7 @@ import static com.HRMS.repository.enums.EStatus.PENDING;
 @AllArgsConstructor
 @SuperBuilder
 public class GetAllCompanyResponseDto {
+    String id;
     String companyName;
     String companyAddress;
     String companyPhone;

@@ -1,5 +1,6 @@
 package com.HRMS.dto.request;
 
+import com.HRMS.repository.enums.EStatus;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 public class UpdateCompanyRequestDto {
-    @Size(min = 10,max=10)
-    Long taxNumber;
+    String id;
+    EStatus status;
 }

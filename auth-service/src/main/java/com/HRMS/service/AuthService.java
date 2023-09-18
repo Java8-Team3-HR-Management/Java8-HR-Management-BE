@@ -141,6 +141,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
             save(authAdmin);
             createProfileProducer.sendCreateAdminMessage(CreateAdmin.builder()
                     .name(dto.getName())
+                     .authId(authAdmin.getId())
                     .surname(dto.getSurname())
                     .email(dto.getEmail())
                     .build());
@@ -154,6 +155,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         }
         Auth manager=Auth.builder()
                 .email(dto.getEmail())
+                .companyEmail(dto.getCompanyEmail())
                 .password(dto.getPassword())
                 .roles(ERole.MANAGER)
                 .build();
@@ -163,7 +165,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
                 .surname(dto.getSurname())
                 .email(dto.getEmail())
                 .password(dto.getPassword())
-                .companyEmail(dto.getCompanyName())
+                .companyEmail(dto.getCompanyEmail())
                 .companyName(dto.getCompanyName())
                 .title(dto.getTitle())
                 .salary(dto.getSalary())
