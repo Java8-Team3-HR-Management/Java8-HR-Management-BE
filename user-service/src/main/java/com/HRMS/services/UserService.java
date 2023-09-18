@@ -8,6 +8,7 @@ import com.HRMS.exceptions.UserException;
 import com.HRMS.mapper.IUserMapper;
 import com.HRMS.rabbitmq.model.CreateAdmin;
 import com.HRMS.rabbitmq.model.CreateEmployee;
+import com.HRMS.rabbitmq.model.CreateManager;
 import com.HRMS.rabbitmq.model.CreateProfile;
 import com.HRMS.repository.IUserRepository;
 import com.HRMS.repository.entity.User;
@@ -120,6 +121,26 @@ public class UserService extends ServiceManager<User,Long> {
                 .surname(admin.getSurname())
                 .authid(admin.getAuthId())
                 .email(admin.getEmail())
+                .role(ERole.ADMIN)
+                .status(EStatus.ACTIVE)
+                .build();
+        save(user);
+        return true;
+    }
+    public Boolean createManager(CreateManager manager) {
+        Optional<User> optionalUser = userRepository.findOptionalByEmail(manager.getEmail());
+        if (!optionalUser.isEmpty()) {
+            throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
+        }
+        User user= User.builder()
+                .name(manager.getName())
+                .surname(manager.getSurname())
+                .authid(manager.getAuthId())
+                .email(manager.getEmail())
+                .companyEmail(manager.getCompanyEmail())
+                .companyName(manager.getCompanyName())
+                .role(ERole.MANAGER)
+                .status(EStatus.PENDING)
                 .build();
         save(user);
         return true;

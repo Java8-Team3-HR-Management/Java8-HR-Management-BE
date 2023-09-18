@@ -8,10 +8,7 @@ import com.HRMS.dto.response.DoLoginResponseDto;
 import com.HRMS.exceptions.AuthException;
 import com.HRMS.exceptions.ErrorType;
 import com.HRMS.mapper.IAuthMapper;
-import com.HRMS.rabbitmq.model.CreateAdmin;
-import com.HRMS.rabbitmq.model.CreateEmployee;
-import com.HRMS.rabbitmq.model.CreateProfile;
-import com.HRMS.rabbitmq.model.SendActivationEmail;
+import com.HRMS.rabbitmq.model.*;
 import com.HRMS.rabbitmq.producer.CreateEmployeeProducer;
 import com.HRMS.rabbitmq.producer.CreateProfileProducer;
 import com.HRMS.rabbitmq.producer.EmailProducer;
@@ -148,6 +145,29 @@ public class AuthService extends ServiceManager<Auth,Long> {
                     .email(dto.getEmail())
                     .build());
         }
+        return true;
+    }
+    public Boolean addManager(AddUserRequestDto dto){
+        Optional<Auth> managerOpt= repository.findOptionalByEmail(dto.getEmail());
+        if(!managerOpt.isEmpty()){
+            throw new AuthException(ErrorType.MAIL_ALREADY_HAS_BEEN);
+        }
+        Auth manager=Auth.builder()
+                .email(dto.getEmail())
+                .password(dto.getPassword())
+                .roles(ERole.MANAGER)
+                .build();
+        save(manager);
+        createProfileProducer.sendCreateManagerMessage(CreateManager.builder()
+                .name(dto.getName())
+                .surname(dto.getSurname())
+                .email(dto.getEmail())
+                .password(dto.getPassword())
+                .companyEmail(dto.getCompanyName())
+                .companyName(dto.getCompanyName())
+                .title(dto.getTitle())
+                .salary(dto.getSalary())
+                .build());
         return true;
     }
 

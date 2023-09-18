@@ -27,6 +27,8 @@ public class RabbitConfig {
 
     private String routingKeyCreateAdmin="key-create-admin";
     private String queueCreateAdmin="queue-create-admin";
+    private String routingKeyCreateManager="key-create-manager";
+    private String queueCreateManager="queue-create-manager";
 
 
 // Beans for create guest user at user service
@@ -79,6 +81,11 @@ public class RabbitConfig {
     Binding bindingCreateAdmin(DirectExchange directExchangeAuth, Queue queueCreateAdmin) {
         return BindingBuilder.bind(queueCreateAdmin).to(directExchangeAuth).with(routingKeyCreateAdmin);
     }
-
+    @Bean
+    Queue queueCreateManager() {return new Queue(queueCreateManager);}
+    @Bean
+    Binding bindingCreateManager(DirectExchange directExchangeAuth, Queue queueCreateManager) {
+        return BindingBuilder.bind(queueCreateManager).to(directExchangeAuth).with(routingKeyCreateManager);
+    }
 
 }

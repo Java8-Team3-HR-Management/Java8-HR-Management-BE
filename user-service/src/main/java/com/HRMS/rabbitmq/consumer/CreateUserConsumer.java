@@ -2,6 +2,7 @@ package com.HRMS.rabbitmq.consumer;
 
 import com.HRMS.rabbitmq.model.CreateAdmin;
 import com.HRMS.rabbitmq.model.CreateEmployee;
+import com.HRMS.rabbitmq.model.CreateManager;
 import com.HRMS.rabbitmq.model.CreateProfile;
 import com.HRMS.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,4 +23,6 @@ public class CreateUserConsumer {
 
     @RabbitListener(queues = "queue-create-admin")
     public void createAdmin(CreateAdmin admin){service.createAdmin(admin);}
+    @RabbitListener(queues = "queue-create-manager")
+    public void createManager(CreateManager manager){service.createManager(manager);}
 }
