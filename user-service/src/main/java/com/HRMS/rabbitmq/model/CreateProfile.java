@@ -13,7 +13,8 @@ import java.io.Serializable;
 @Builder
 public class CreateProfile implements Serializable {
         Long authid;
-        String nameSurname;
+        String name;
+        String surname;
         String email;
         String password;
     }

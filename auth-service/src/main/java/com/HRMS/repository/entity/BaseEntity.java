@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 
 
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class BaseEntity {
 
     boolean state;
 
-    Long createdate;
+    LocalDate createDate;
 
-    Long updatedate;
+    LocalDate updateDate;
 }

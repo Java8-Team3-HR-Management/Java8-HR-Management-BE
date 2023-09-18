@@ -17,9 +17,9 @@ public class Auth extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String password;
-    String employeeId;
     @Column(unique = true)
     String email;
+    @Column(unique = true)
     String companyEmail;
     @Enumerated(EnumType.STRING)
     ERole roles;

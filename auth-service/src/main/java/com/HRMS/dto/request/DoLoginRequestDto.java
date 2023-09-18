@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoLoginRequestDto {
-    String token;
     String email;
     String password;
     String companyMail;
