@@ -79,6 +79,21 @@ public class AuthController {
                 .build());
 
     }
+    @PostMapping("/createManager")
+    public ResponseEntity<UserSaveResponseDto> createManager(@RequestBody @Valid AddUserRequestDto dto){
+        Boolean check=authService.addManager(dto);
+        if(check){
+            return ResponseEntity.ok(UserSaveResponseDto.builder()
+                    .status(200)
+                    .result("Kayıt Başarılı.")
+                    .build());
+        }
+        return ResponseEntity.badRequest().body(UserSaveResponseDto.builder()
+                .status(100)
+                .result("Bilgileri tekrar kontrol ediniz.")
+                .build());
+
+    }
 
 
 

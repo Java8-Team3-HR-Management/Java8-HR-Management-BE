@@ -1,4 +1,4 @@
-package com.HRMS.dto.request;
+package com.HRMS.rabbitmq.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +9,13 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class AddManagerRequestDto {
-    Long companyId;
+public class CreateManager {
+    Long authId;
     String name;
     String surname;
     String email;
     String companyEmail;
+    String companyName;
     String password;
     String title;
     Long salary;

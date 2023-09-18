@@ -1,6 +1,7 @@
 package com.HRMS.rabbitmq.producer;
 
 import com.HRMS.rabbitmq.model.CreateAdmin;
+import com.HRMS.rabbitmq.model.CreateManager;
 import com.HRMS.rabbitmq.model.CreateProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,5 +23,9 @@ public class CreateProfileProducer {
         rabbitTemplate.convertAndSend("direct-exchange-auth",
                 "key-create-admin",
                 admin);
+    }
+    public void sendCreateManagerMessage(CreateManager manager){
+        rabbitTemplate.convertAndSend("direct-exchange-auth","key-create-manager"
+                ,manager);
     }
 }

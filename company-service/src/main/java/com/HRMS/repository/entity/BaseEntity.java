@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @SuperBuilder
 public class BaseEntity {
-    int state;
-    LocalDate createDate=LocalDate.now();
+    boolean state;
+    LocalDate createDate;
     LocalDate updateDate;
 }
