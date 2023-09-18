@@ -10,6 +10,7 @@ public class RestApis {
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
     public static final String SAVE = "/save";
+    public static final String CREATEEMPLOYEE =AUTH+"/add-employee";
 
 }
 // TODO: 2.09.2023 İleri tarihlerde RestApiList'e ihtiyaca göre eklemeler yapılacaktır!

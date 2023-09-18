@@ -1,10 +1,12 @@
 package com.HRMS.controller;
 
 
+import com.HRMS.dto.request.AddUserRequestDto;
 import com.HRMS.dto.request.DoLoginRequestDto;
 import com.HRMS.dto.request.DoRegisterRequestDto;
 import com.HRMS.dto.response.DoLoginResponseDto;
 import com.HRMS.dto.response.DoRegisterResponseDto;
+import com.HRMS.dto.response.UserSaveResponseDto;
 import com.HRMS.rabbitmq.model.CreateProfile;
 import com.HRMS.rabbitmq.producer.CreateProfileProducer;
 import com.HRMS.service.AuthService;
@@ -25,7 +27,7 @@ import static com.HRMS.constants.RestApis.*;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping(REGISTER)
+    @PostMapping("/register")
     public ResponseEntity<DoRegisterResponseDto> doRegister(@RequestBody @Valid DoRegisterRequestDto dto){
         Boolean isRegister = authService.register(dto);
         if(isRegister)
@@ -41,11 +43,43 @@ public class AuthController {
         );
     }
 
-    @PostMapping(LOGIN)
+    @PostMapping("/login")
     public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
       return ResponseEntity.ok(authService.login(dto));
 
     }
+
+    @PostMapping("/createEmployee")
+    public ResponseEntity<UserSaveResponseDto> createEmployee(@RequestBody @Valid AddUserRequestDto dto){
+        Boolean check=authService.createEmployee(dto);
+        if(check){
+         return ResponseEntity.ok(UserSaveResponseDto.builder()
+                    .status(200)
+                    .result("Kayıt Başarılı.")
+                    .build());
+        }
+        return ResponseEntity.badRequest().body(UserSaveResponseDto.builder()
+                .status(100)
+                .result("Bilgileri tekrar kontrol ediniz.")
+                .build());
+
+    }
+    @PostMapping("/createAdmin")
+    public ResponseEntity<UserSaveResponseDto> createAdmin(@RequestBody @Valid AddUserRequestDto dto){
+        Boolean check=authService.addAdmin(dto);
+        if(check){
+            return ResponseEntity.ok(UserSaveResponseDto.builder()
+                    .status(200)
+                    .result("Kayıt Başarılı.")
+                    .build());
+        }
+        return ResponseEntity.badRequest().body(UserSaveResponseDto.builder()
+                .status(100)
+                .result("Bilgileri tekrar kontrol ediniz.")
+                .build());
+
+    }
+
 
 
 

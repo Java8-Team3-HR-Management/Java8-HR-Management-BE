@@ -17,6 +17,7 @@ public interface IPostMapper {
     IPostMapper INSTANCE = Mappers.getMapper(IPostMapper.class);
 
     Post toPostFromDto(final AddPostRequestDto dto);
+    GetAllPendingPostResponseDto toGetAllPendingResponseDtoFromPost(final Post post);
 
     GetAllPendingPostResponseDto toGetAllPendingResponseDtoFromPost(final Post post);
 
