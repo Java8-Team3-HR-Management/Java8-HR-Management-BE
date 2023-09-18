@@ -5,11 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CreateManager {
+public class CreateManager implements Serializable {
     Long authId;
     String name;
     String surname;

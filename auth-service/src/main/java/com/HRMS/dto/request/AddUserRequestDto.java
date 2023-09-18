@@ -13,12 +13,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class AddUserRequestDto {
-    Long companyId;
+    String companyId;
     String name;
     String surname;
     String email;
     String password;
     String companyName;
+    String companyEmail;
     String birthPlace;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate birthDate;

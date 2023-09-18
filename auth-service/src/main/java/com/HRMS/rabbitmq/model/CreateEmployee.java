@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 public class CreateEmployee implements Serializable {
-    Long companyId;
+    String companyId;
     Long authId;
     String name;
     String surname;

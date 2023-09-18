@@ -3,6 +3,7 @@ package com.HRMS.repository.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -16,7 +17,8 @@ import java.time.LocalDate;
 @SuperBuilder
 public class BaseEntity {
 
-    boolean state;
+    @Builder.Default
+    boolean state = true;
 
     LocalDate createDate;
 

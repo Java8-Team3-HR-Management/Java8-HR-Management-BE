@@ -28,9 +28,9 @@ public class UserController {
     public ResponseEntity <List<User>> findAllEmployees(@PathVariable String companyName) {
         return ResponseEntity.ok(service.findAllEmployees(companyName));}
 
-    @GetMapping("/getEmployeeById/{id}")
-    public ResponseEntity<User> getEmployeeById(@PathVariable String id) {
-        User employee =  service.getEmployeeById(id);
+    @GetMapping("/getEmployeeByAuthId/{authId}")
+    public ResponseEntity<User> getEmployeeById(@PathVariable Long authId) {
+        User employee =  service.getEmployeeByAuthId(authId);
         return ResponseEntity.ok(employee);
     }
     @PutMapping("/updateEmployee")

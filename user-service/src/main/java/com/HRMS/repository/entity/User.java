@@ -22,10 +22,10 @@ public class User extends BaseEntity
 {
     @Id
     String id;
-    Long authid;
+    Long authId;
     String name;
     String surname;
-    Long companyId;
+    String companyId;
     String email;
     String companyName;
     String companyEmail;

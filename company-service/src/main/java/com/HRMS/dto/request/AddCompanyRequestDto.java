@@ -1,8 +1,10 @@
 package com.HRMS.dto.request;
 
+import com.HRMS.repository.enums.EStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -16,12 +18,13 @@ public class AddCompanyRequestDto {
     String companyName;
     @Size(min = 8,max=200)
     String companyAddress;
-    @Size(min = 11,max=11)
+    @Size(min = 10,max=11)
     String companyPhone;
     @Email
     String companyEmail;
     @Size(min = 10,max=64)
     String companyWebsite;
+    EStatus status ;
 
     Long taxNumber;
 }

@@ -43,7 +43,7 @@ public class UserService extends ServiceManager<User,Long> {
         }
         User user = User.builder()
 
-                .authid(profile.getAuthid())
+                .authId(profile.getAuthid())
                 .email(profile.getEmail())
                 .name(profile.getName())
                 .surname(profile.getSurname())
@@ -78,8 +78,8 @@ public class UserService extends ServiceManager<User,Long> {
         return users;
 
     }
-    public User getEmployeeById(String id){
-        Optional<User> optionalEmployee = userRepository.findById(id);
+    public User getEmployeeByAuthId(Long authId){
+        Optional<User> optionalEmployee = userRepository.findOptionalByAuthId(authId);
         if(optionalEmployee.isEmpty())
             throw new UserException(ErrorType.EMPLOYEE_NOT_FOUND);
         return optionalEmployee.get();
@@ -119,7 +119,7 @@ public class UserService extends ServiceManager<User,Long> {
         User user= User.builder()
                 .name(admin.getName())
                 .surname(admin.getSurname())
-                .authid(admin.getAuthId())
+                .authId(admin.getAuthId())
                 .email(admin.getEmail())
                 .role(ERole.ADMIN)
                 .status(EStatus.ACTIVE)
@@ -135,12 +135,13 @@ public class UserService extends ServiceManager<User,Long> {
         User user= User.builder()
                 .name(manager.getName())
                 .surname(manager.getSurname())
-                .authid(manager.getAuthId())
+                .authId(manager.getAuthId())
                 .email(manager.getEmail())
                 .companyEmail(manager.getCompanyEmail())
                 .companyName(manager.getCompanyName())
                 .role(ERole.MANAGER)
-                .status(EStatus.PENDING)
+                .status(EStatus.ACTIVE)
+                .contractStatement(EContractStatement.ACTIVE)
                 .build();
         save(user);
         return true;
