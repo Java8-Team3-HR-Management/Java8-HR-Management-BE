@@ -63,8 +63,8 @@ public class UserService extends ServiceManager<User,Long> {
         save(user);
         return true;
     }
-    public List<User> findAllEmployees(String companyName) {
-        Optional<List<User>> optionalEmployee = userRepository.findOptionalByCompanyName(companyName);
+    public List<User> findAllEmployees(String id) {
+        Optional<List<User>> optionalEmployee = userRepository.findOptionalByCompanyId(id);
         if (optionalEmployee.isEmpty()) {
             throw new UserException(ErrorType.EMPLOYEE_NOT_FOUND);
         }

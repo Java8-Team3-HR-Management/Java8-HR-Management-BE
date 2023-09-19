@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface IUserRepository extends MongoRepository<User, Long> {
 
     Optional<User> findOptionalByEmail(String email);
-    Optional<List<User>> findOptionalByCompanyName(String companyName);
+    Optional<List<User>> findOptionalByCompanyId(String companyId);
     Optional<User> findOptionalByAuthId(Long id);
     Optional<User> findById(String id);
     Optional<User> findByCompanyIdAndDepartment(String companyId, String department);
