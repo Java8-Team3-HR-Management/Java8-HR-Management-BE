@@ -24,9 +24,9 @@ import static com.HRMS.constants.RestApiList.*;
 public class UserController {
     private final UserService service;
 
-    @GetMapping("/findAllEmployee/{companyName}")
-    public ResponseEntity <List<User>> findAllEmployees(@PathVariable String companyName) {
-        return ResponseEntity.ok(service.findAllEmployees(companyName));}
+    @GetMapping("/findAllEmployee/{companyId}")
+    public ResponseEntity <List<User>> findAllEmployees(@PathVariable String companyId) {
+        return ResponseEntity.ok(service.findAllEmployees(companyId));}
 
     @GetMapping("/getEmployeeByAuthId/{authId}")
     public ResponseEntity<User> getEmployeeById(@PathVariable Long authId) {
