@@ -3,6 +3,7 @@ package com.HRMS.controller;
 import com.HRMS.dto.request.AddCompanyRequestDto;
 import com.HRMS.dto.request.UpdateCompanyRequestDto;
 import com.HRMS.dto.response.AddCompanyResponseDto;
+import com.HRMS.dto.response.CompanyAverageRateResponseDto;
 import com.HRMS.dto.response.GetAllCompanyResponseDto;
 import com.HRMS.dto.response.UpdateCompanyResponseDto;
 import com.HRMS.services.CompanyService;
@@ -23,7 +24,7 @@ import static com.HRMS.constants.RestApiList.*;
 public class CompanyController {
     private final CompanyService service;
 
-    @PostMapping(ADDCOMPANY)
+    @PostMapping("/add-company")
     public ResponseEntity<AddCompanyResponseDto> addCompany(@RequestBody @Valid AddCompanyRequestDto dto){
         Boolean check = service.addCompany(dto);
         if (check){
@@ -37,18 +38,18 @@ public class CompanyController {
                 .result("Please check the details you entered")
                 .build());
     }
-    @GetMapping(GETALLCOMPANY)
+    @GetMapping("/get-all-company")
     public ResponseEntity<Optional<List<GetAllCompanyResponseDto>>> getAllCompany(){
         List<GetAllCompanyResponseDto> list = service.getAllCompanies();
         return ResponseEntity.ok(Optional.of(list));
     }
-    @GetMapping(GETALLCOMPANYAPPROVAL)
+    @GetMapping("/get-all-company-waiting-for-approval")
     public ResponseEntity<Optional<List<GetAllCompanyResponseDto>>> getAllCompanyApproval(){
         List<GetAllCompanyResponseDto> list = service.getAllCompaniesWaitingForApproval();
         return ResponseEntity.ok(Optional.of(list));
     }
-    @PutMapping(UPDATECOMPANY)
-    public ResponseEntity<UpdateCompanyResponseDto> updateCompany(@RequestBody @Valid UpdateCompanyRequestDto dto){
+    @PutMapping("/update-company")
+    public ResponseEntity<UpdateCompanyResponseDto> updateCompany(@RequestBody UpdateCompanyRequestDto dto){
         Boolean check = service.updateCompany(dto);
         if (check){
             return ResponseEntity.ok(UpdateCompanyResponseDto.builder()
@@ -61,8 +62,12 @@ public class CompanyController {
                 .result("Please check the details you entered")
                 .build());
     }
-    @GetMapping(GETCOMPANYBYNAME)
-    public ResponseEntity<GetAllCompanyResponseDto> getCompanyByName(@RequestParam String name){
-        return ResponseEntity.ok(service.getCompanyByName(name));
+    @GetMapping("/get-company-by-name/{companyName}")
+    public ResponseEntity<GetAllCompanyResponseDto> getCompanyByName(@PathVariable String companyName){
+        return ResponseEntity.ok(service.getCompanyByName(companyName));
+    }
+    @GetMapping("/get-company-avg-rate/{companyId}")
+    public ResponseEntity<CompanyAverageRateResponseDto> getCompanyAvgRate(@PathVariable String companyId){
+        return ResponseEntity.ok(service.getCompanyAverageRate(companyId));
     }
 }
