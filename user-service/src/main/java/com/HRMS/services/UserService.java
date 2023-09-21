@@ -18,7 +18,6 @@ import com.HRMS.repository.enums.EStatus;
 import com.HRMS.utils.ServiceManager;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +41,6 @@ public class UserService extends ServiceManager<User,Long> {
             throw new UserException(ErrorType.GUEST_ALREADY_EXIST);
         }
         User user = User.builder()
-
                 .authId(profile.getAuthid())
                 .email(profile.getEmail())
                 .name(profile.getName())
@@ -53,15 +51,15 @@ public class UserService extends ServiceManager<User,Long> {
     }
     public Boolean createEmployee(CreateEmployee employee) {
         Optional<User> optionalUser = userRepository.findOptionalByEmail(employee.getEmail());
-        if (!optionalUser.isEmpty()) {
-            throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
+        if (optionalUser.isEmpty()) {
+            User user= userMapper.toUserFromModel(employee);
+            user.setRole(ERole.EMPLOYEE);
+            user.setContractStatement(EContractStatement.ACTIVE);
+            user.setStatus(EStatus.ACTIVE);
+            save(user);
+            return true;
         }
-        User user= userMapper.toUserFromModel(employee);
-        user.setRole(ERole.EMPLOYEE);
-        user.setContractStatement(EContractStatement.ACTIVE);
-        user.setStatus(EStatus.ACTIVE);
-        save(user);
-        return true;
+        throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
     }
     public List<User> findAllEmployees(String id) {
         Optional<List<User>> optionalEmployee = userRepository.findOptionalByCompanyId(id);
@@ -101,11 +99,12 @@ public class UserService extends ServiceManager<User,Long> {
 
         Optional<User> employees = userRepository.findByCompanyIdAndDepartment(requestDto.getCompanyId(), requestDto.getDepartment());
 
-        if (!employees.isPresent() &&!(employees.get().getRole()==ERole.EMPLOYEE)) {
+        if (employees.isEmpty() ||!(employees.get().getRole()==ERole.EMPLOYEE)) {
             throw new UserException(ErrorType.EMPLOYEE_NOT_FOUND);
         }
         if (employees.get().getRole()==ERole.EMPLOYEE){
             User employee = employees.get();
+
             ViewAllEmployeeInfoResponseDto responseDto = IUserMapper.INSTANCE.toViewAllEmployeeInfoResponseDtoFromUser(employee);
             return Optional.of(responseDto);
         }
@@ -113,38 +112,38 @@ public class UserService extends ServiceManager<User,Long> {
     }
     public Boolean createAdmin(CreateAdmin admin) {
         Optional<User> optionalUser = userRepository.findOptionalByEmail(admin.getEmail());
-        if (!optionalUser.isEmpty()) {
-            throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
+        if (optionalUser.isEmpty()) {
+            User user= User.builder()
+                    .name(admin.getName())
+                    .surname(admin.getSurname())
+                    .authId(admin.getAuthId())
+                    .email(admin.getEmail())
+                    .role(ERole.ADMIN)
+                    .status(EStatus.ACTIVE)
+                    .build();
+            save(user);
+            return true;
         }
-        User user= User.builder()
-                .name(admin.getName())
-                .surname(admin.getSurname())
-                .authId(admin.getAuthId())
-                .email(admin.getEmail())
-                .role(ERole.ADMIN)
-                .status(EStatus.ACTIVE)
-                .build();
-        save(user);
-        return true;
+        throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
     }
     public Boolean createManager(CreateManager manager) {
         Optional<User> optionalUser = userRepository.findOptionalByEmail(manager.getEmail());
-        if (!optionalUser.isEmpty()) {
-            throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
+        if (optionalUser.isEmpty()) {
+            User user= User.builder()
+                    .name(manager.getName())
+                    .surname(manager.getSurname())
+                    .authId(manager.getAuthId())
+                    .email(manager.getEmail())
+                    .companyEmail(manager.getCompanyEmail())
+                    .companyName(manager.getCompanyName())
+                    .role(ERole.MANAGER)
+                    .status(EStatus.ACTIVE)
+                    .contractStatement(EContractStatement.ACTIVE)
+                    .build();
+            save(user);
+            return true;
         }
-        User user= User.builder()
-                .name(manager.getName())
-                .surname(manager.getSurname())
-                .authId(manager.getAuthId())
-                .email(manager.getEmail())
-                .companyEmail(manager.getCompanyEmail())
-                .companyName(manager.getCompanyName())
-                .role(ERole.MANAGER)
-                .status(EStatus.ACTIVE)
-                .contractStatement(EContractStatement.ACTIVE)
-                .build();
-        save(user);
-        return true;
+        throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
     }
 
 }

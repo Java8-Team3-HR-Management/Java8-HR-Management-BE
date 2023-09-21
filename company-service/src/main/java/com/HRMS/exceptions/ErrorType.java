@@ -24,8 +24,12 @@ public enum ErrorType {
     DOLOGIN_INVALID_USERNAME_PASSWORD(1004,"Kullanıcı adı veya şifre hatalı",HttpStatus.BAD_REQUEST),
     NAME_IS_NULL(1005,"Name alanı boş geçilemez",HttpStatus.BAD_REQUEST),
     ID_NOT_FOUND(1006,"Aradığınız id ye ait kayıt bulunamadı",HttpStatus.BAD_REQUEST),
-    COMPANY_ALREADY_EXISTS(1007,"This company already exist",HttpStatus.BAD_REQUEST),
-    COMPANY_NOT_FOUND(1007,"This company is not found at our database",HttpStatus.BAD_REQUEST);
+    INVALID_TOKEN(1007,"Geçersiz token",HttpStatus.BAD_REQUEST),
+    COMPANY_ALREADY_EXISTS(1008,"This company already exist",HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND(1009,"This company is not found at our database",HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED_USER(1010,"This company is not found at our database",HttpStatus.BAD_REQUEST),
+    COMMENT_NOT_FOUND(1011,"This company is not found at our database",HttpStatus.BAD_REQUEST),
+    COMPANY_NOT_FOUND(1012,"This company is not found at our database",HttpStatus.BAD_REQUEST);
 
 
     
