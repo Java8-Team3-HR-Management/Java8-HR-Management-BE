@@ -44,7 +44,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody @Valid DoLoginRequestDto dto){
+    @CrossOrigin("*")
+    public ResponseEntity<DoLoginResponseDto> doLogin(@RequestBody  DoLoginRequestDto dto){
       return ResponseEntity.ok(authService.login(dto));
 
     }

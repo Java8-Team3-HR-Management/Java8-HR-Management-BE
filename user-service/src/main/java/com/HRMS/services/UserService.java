@@ -41,12 +41,13 @@ public class UserService extends ServiceManager<User,Long> {
             throw new UserException(ErrorType.GUEST_ALREADY_EXIST);
         }
         User user = User.builder()
-                .authId(profile.getAuthid())
+                .authId(profile.getAuthId())
                 .email(profile.getEmail())
                 .name(profile.getName())
                 .surname(profile.getSurname())
                 .role(ERole.GUEST)
                 .build();
+        save(user);
         return true;
     }
     public Boolean createEmployee(CreateEmployee employee) {
