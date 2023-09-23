@@ -27,7 +27,14 @@ public enum ErrorType {
     GUEST_ALREADY_EXIST(1007,"This guest already exist",HttpStatus.BAD_REQUEST),
     EMPLOYEE_ALREADY_EXIST(1008,"This employee already exist",HttpStatus.BAD_REQUEST),
     EMPLOYEE_UNAUTHORIZED_UPDATE(1009,"Kimlik doğrulaması başarısız.",HttpStatus.BAD_REQUEST),
-    EMPLOYEE_NOT_FOUND(1010,"Çalışan bulunamadı!",HttpStatus.BAD_REQUEST);
+    EMPLOYEE_NOT_FOUND(1010,"Çalışan bulunamadı!",HttpStatus.BAD_REQUEST),
+    VOCATION_NOT_CREATED(1011,"Oluşturulamadı!",HttpStatus.BAD_REQUEST),
+    VOCATION_DURATION_NOT_BE_MINUS(1012,"Süre eksi olamaz!",HttpStatus.BAD_REQUEST),
+
+    VOCATION_NOT_VALID(1013,"Geçerli değil!",HttpStatus.BAD_REQUEST),
+    DEBT_OVER_LIMIT(1014,"Maaşınızın yarısından fazla avans çekemezsiniz.",HttpStatus.BAD_REQUEST),
+    DEBT_ONE_TIME(1015,"Bir ay içinde birden fazla avans çekemezsiniz.",HttpStatus.BAD_REQUEST),
+    DEBT_NOT_FOUND(1016,"Çalışana dair avans kaydı bulunamadı.",HttpStatus.BAD_REQUEST);
 
 
 
