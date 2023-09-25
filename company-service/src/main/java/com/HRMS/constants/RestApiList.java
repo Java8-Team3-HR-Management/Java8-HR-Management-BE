@@ -9,4 +9,5 @@ public class RestApiList {
     public static final String GETALLCOMPANYAPPROVAL = "/getAllCompanyApproval";
     public static final String UPDATECOMPANY = "/updateCompany";
     public static final String GETCOMPANYBYNAME = "/getCompanyByName";
+    public static final String EXPENSE= "/expense";
 }
