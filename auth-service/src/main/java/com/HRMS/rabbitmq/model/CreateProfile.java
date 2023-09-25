@@ -11,8 +11,9 @@ import java.io.Serializable;
 @Data
 @Builder
 public class CreateProfile implements Serializable {
-        Long authid;
-        String nameSurname;
+        Long authId;
+        String name;
+        String surname;
         String email;
         String password;
     }

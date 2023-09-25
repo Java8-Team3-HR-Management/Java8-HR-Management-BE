@@ -26,6 +26,7 @@ public class Company extends BaseEntity {
     String companyEmail;
     String companyWebsite;
     Long taxNumber;
+    Double totalRate;
     @Builder.Default
     EStatus status = PENDING;
 }

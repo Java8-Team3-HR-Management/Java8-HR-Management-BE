@@ -13,16 +13,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Document(collection = "posts")
-public class Post extends BaseEntity {
+@Document(collection = "comments")
+public class Comment extends BaseEntity {
     @Id
     String id;
     String companyName;
     String companyId;
-    String postSubject;
-    String postContent;
+    String commentSubject;
+    String commentContent;
     String employeeId;
     String employeeName;
+    Double rate;
     @Builder.Default
-    EStatus status=EStatus.PENDING;
+    EStatus status = EStatus.PENDING;
 }
