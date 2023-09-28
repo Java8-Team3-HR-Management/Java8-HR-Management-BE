@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ForgotPasswordProducer {
-    private final RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate template;
 
-    public static void sendMailForgotPassword(ForgotPassword email){
-        rabbitTemplate.convertAndSend("direct-exchange-auth","key-forgot-password",email);
+    public void sendMailForgotPassword(ForgotPassword email){
+        template.convertAndSend("direct-exchange-auth","key-forgot-password",email);
     }
 }
