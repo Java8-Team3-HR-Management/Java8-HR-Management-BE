@@ -32,14 +32,14 @@ public class ExpenseController {
         return ResponseEntity.ok(expenseService.approvalExpense(dto,token));
     }
 
-    @GetMapping("/get-all-expense")
-    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllExpense(){
-        List<GetAllExpenseResponseDto> list=expenseService.getAllExpense();
+    @GetMapping("/get-all-expense/{companyId}")
+    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllExpense(@RequestParam String companyId){
+        List<GetAllExpenseResponseDto> list=expenseService.getAllExpense(companyId);
         return ResponseEntity.ok(Optional.of(list));
     }
-    @GetMapping("/get-all-pending-expense")
-    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllPendingExpense(){
-        List<GetAllExpenseResponseDto> list=expenseService.getAllPendingExpense();
+    @GetMapping("/get-all-pending-expense/{companyId}")
+    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllPendingExpense(@RequestParam String companyId){
+        List<GetAllExpenseResponseDto> list=expenseService.getAllPendingExpense(companyId);
         return ResponseEntity.ok(Optional.of(list));
     }
 

@@ -22,6 +22,7 @@ import java.util.List;
 public class Expense extends BaseEntity {
     @Id
     String id;
+    String companyId;
     String name;
     String surName;
     String department;
