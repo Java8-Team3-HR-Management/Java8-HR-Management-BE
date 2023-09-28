@@ -40,8 +40,8 @@ public class CommentController {
     public ResponseEntity<List<Comment>> getAllPendingComment() {
         return ResponseEntity.ok(service.getAllPendingComment());
     }
-    @GetMapping("/get-all-approved-comment")
-    public ResponseEntity<List<Comment>> getAllApprovedComment() {
-        return ResponseEntity.ok(service.getAllApprovedComment());
+    @GetMapping("/get-all-approved-comment/{companyId}")
+    public ResponseEntity<List<Comment>> getAllApprovedComment(String companyId) {
+        return ResponseEntity.ok(service.getAllApprovedComment(companyId));
     }
 }

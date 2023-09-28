@@ -9,6 +9,9 @@ public class RabbitMqConfig {
     private String mailRegisterQueue = "mail-register-queue";
     //rabbit config send activation mail for employee
     private final String queueSendActivationMail = "queue-employee-mail";
+
+    private final String queueForgotPassword = "queue-forgot-password";
+
     @Bean
     Queue mailRegisterQueue(){
         return new Queue(mailRegisterQueue);
@@ -18,4 +21,9 @@ public class RabbitMqConfig {
     Queue queueSendActivationMail(){
         return new Queue(queueSendActivationMail);
     }
+
+
+
+    @Bean
+    Queue queueForgotPassword() {return new Queue(queueForgotPassword);}
 }

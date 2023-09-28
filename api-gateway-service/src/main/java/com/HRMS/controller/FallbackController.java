@@ -22,6 +22,9 @@ public class FallbackController {
     @GetMapping("/company")
     public ResponseEntity<String> fallbackCompanyService(){
         return ResponseEntity.ok("Company servisi şu anda hizmet verememektedir. Lütfen daha sonra tekrar deneyiniz");
+    } @GetMapping("/comment")
+    public ResponseEntity<String> fallbackCommentService(){
+        return ResponseEntity.ok("Comment servisi şu anda hizmet verememektedir. Lütfen daha sonra tekrar deneyiniz");
     }
     @GetMapping("/employee")
     public ResponseEntity<String> fallbackEmployeeService(){

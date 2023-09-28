@@ -1,6 +1,8 @@
 package com.HRMS.repository.entity;
 
+import com.HRMS.repository.enums.EStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -20,6 +22,8 @@ public class Debt extends BaseEntity{
     private String userId;
     private double salary;
     private LocalDate lastAdvanceDate;
+    @Builder.Default
+    private EStatus eStatus = EStatus.PENDING;
 
 
 }

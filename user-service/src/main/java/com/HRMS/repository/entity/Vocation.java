@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@Document(collection = "users")
+@Document(collection = "vacations")
 public class Vocation extends BaseEntity {
     @Id
     private String id;

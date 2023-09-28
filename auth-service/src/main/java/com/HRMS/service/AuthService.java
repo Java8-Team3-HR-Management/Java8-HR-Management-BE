@@ -30,17 +30,19 @@ public class AuthService extends ServiceManager<Auth, Long> {
     private final JwtTokenManager jwtTokenManager;
     private final CreateEmployeeProducer createEmployeeProducer;
     private final EmailProducer emailProducer;
+    private final  ForgotPasswordProducer forgotPasswordProducer;
 
 
     public AuthService(IAuthRepository repository,
                        CreateProfileProducer createProfileProducer, JwtTokenManager jwtTokenManager, CreateEmployeeProducer createEmployeeProducer,
-                       EmailProducer emailProducer) {
+                       EmailProducer emailProducer,ForgotPasswordProducer forgotPasswordProducer) {
         super(repository);
         this.repository = repository;
         this.createProfileProducer = createProfileProducer;
         this.jwtTokenManager = jwtTokenManager;
         this.createEmployeeProducer = createEmployeeProducer;
         this.emailProducer = emailProducer;
+        this.forgotPasswordProducer =forgotPasswordProducer;
 
     }
 
@@ -181,7 +183,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
      if(auth.isEmpty()) throw new AuthException(ErrorType.FORGOT_PASSWORD_INVALID_EMAIL);
      if (auth.get().isState()==false)throw new AuthException(ErrorType.BAD_REQUEST_ERROR);
 
-     ForgotPasswordProducer.sendMailForgotPassword(ForgotPassword.builder()
+     forgotPasswordProducer.sendMailForgotPassword(ForgotPassword.builder()
              .email(email)
              .authId(auth.get().getId())
              .password(auth.get().getPassword())
