@@ -41,7 +41,7 @@ public class CommentController {
         return ResponseEntity.ok(service.getAllPendingComment());
     }
     @GetMapping("/get-all-approved-comment/{companyId}")
-    public ResponseEntity<List<Comment>> getAllApprovedComment(String companyId) {
+    public ResponseEntity<List<Comment>> getAllApprovedComment(@PathVariable String companyId) {
         return ResponseEntity.ok(service.getAllApprovedComment(companyId));
     }
 }
