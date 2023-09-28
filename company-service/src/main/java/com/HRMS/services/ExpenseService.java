@@ -10,6 +10,7 @@ import com.HRMS.mapper.IExpenseMapper;
 import com.HRMS.repository.IExpenseRepository;
 import com.HRMS.repository.entity.Expense;
 import com.HRMS.repository.enums.EStatus;
+import com.HRMS.utils.JwtTokenManager;
 import com.HRMS.utils.ServiceManager;
 
 import org.springframework.stereotype.Service;
@@ -24,12 +25,22 @@ import java.util.Optional;
 public class ExpenseService extends ServiceManager<Expense, String> {
 
     private final IExpenseRepository repository;
-    public ExpenseService(IExpenseRepository repository) {
+    private final JwtTokenManager tokenManager;
+    public ExpenseService(IExpenseRepository repository,JwtTokenManager tokenManager) {
         super(repository);
         this.repository=repository;
+        this.tokenManager=tokenManager;
     }
 
-    public Boolean createExpense(CreatExpenseRequestDto dto){
+    public Boolean createExpense(CreatExpenseRequestDto dto,String token){
+        Optional<Long> id=tokenManager.getByIdFromToken(token);
+        if (id.isEmpty()) {
+            throw new CompanyException(ErrorType.USER_NOT_FOUND);
+        }
+        Optional<String> role = tokenManager.getRoleFromToken(token.toString());
+        if (role.isEmpty()) {
+            throw new CompanyException(ErrorType.UNAUTHORIZED_USER);
+        }
         if(dto.getFile().isEmpty()){
             Expense expense = Expense.builder()
                     .name(dto.getName())
@@ -68,7 +79,15 @@ public class ExpenseService extends ServiceManager<Expense, String> {
         return expenses;
     }
 
-    public Boolean approvalExpense(ApprovalExpenseRequestDto dto){
+    public Boolean approvalExpense(ApprovalExpenseRequestDto dto,String token){
+        Optional<Long> id=tokenManager.getByIdFromToken(token);
+        if (id.isEmpty()) {
+            throw new CompanyException(ErrorType.USER_NOT_FOUND);
+        }
+        Optional<String> role = tokenManager.getRoleFromToken(token.toString());
+        if (role.isEmpty()) {
+            throw new CompanyException(ErrorType.UNAUTHORIZED_USER);
+        }
         Optional<Expense> optApproval= repository.findById(dto.getId());
         if(optApproval.isEmpty()){
             throw new CompanyException(ErrorType.EXPENSE_NOT_FOUND);

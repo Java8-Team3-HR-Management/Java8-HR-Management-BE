@@ -26,7 +26,11 @@ public enum ErrorType {
     ID_NOT_FOUND(1006,"Aradığınız id ye ait kayıt bulunamadı",HttpStatus.BAD_REQUEST),
     COMPANY_ALREADY_EXISTS(1007,"This company already exist",HttpStatus.BAD_REQUEST),
     COMPANY_NOT_FOUND(1007,"This company is not found at our database",HttpStatus.BAD_REQUEST),
-    EXPENSE_NOT_FOUND(1008,"Böyle bir harcama kaydı bulunmamaktadır",HttpStatus.BAD_REQUEST);
+    UNAUTHORIZED_USER(1008,"UNAUTHORIZED_USER",HttpStatus.BAD_REQUEST),
+    COMMENT_NOT_FOUND(1009,"Comment not found",HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND(1010,"User not found",HttpStatus.BAD_REQUEST),
+    INVALID_TOKEN(1011,"Invalid Token",HttpStatus.BAD_REQUEST),
+    EXPENSE_NOT_FOUND(1012,"Böyle bir harcama kaydı bulunmamaktadır",HttpStatus.BAD_REQUEST);
 
 
     

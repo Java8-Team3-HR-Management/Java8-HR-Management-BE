@@ -30,11 +30,13 @@ public enum ErrorType {
     EMPLOYEE_NOT_FOUND(1010,"Çalışan bulunamadı!",HttpStatus.BAD_REQUEST),
     VOCATION_NOT_CREATED(1011,"Oluşturulamadı!",HttpStatus.BAD_REQUEST),
     VOCATION_DURATION_NOT_BE_MINUS(1012,"Süre eksi olamaz!",HttpStatus.BAD_REQUEST),
-
+    INVALID_TOKEN(1017,"Unauthorized yoken!",HttpStatus.BAD_REQUEST),
     VOCATION_NOT_VALID(1013,"Geçerli değil!",HttpStatus.BAD_REQUEST),
     DEBT_OVER_LIMIT(1014,"Maaşınızın yarısından fazla avans çekemezsiniz.",HttpStatus.BAD_REQUEST),
     DEBT_ONE_TIME(1015,"Bir ay içinde birden fazla avans çekemezsiniz.",HttpStatus.BAD_REQUEST),
-    DEBT_NOT_FOUND(1016,"Çalışana dair avans kaydı bulunamadı.",HttpStatus.BAD_REQUEST);
+    USER_NOT_FOUND(1016,"User not found",HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED_USER(1017,"Yetkilendirilmemiş kullanıcı",HttpStatus.BAD_REQUEST),
+    DEBT_NOT_FOUND(1018,"Çalışana dair avans kaydı bulunamadı.",HttpStatus.BAD_REQUEST);
 
 
 
