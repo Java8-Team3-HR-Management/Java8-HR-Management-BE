@@ -22,17 +22,17 @@ public class ExpenseController {
 
     private final ExpenseService expenseService;
 
-    @PostMapping("/createexpense")
-    public ResponseEntity<Boolean> createExpense(CreatExpenseRequestDto dto){
-        return ResponseEntity.ok(expenseService.createExpense(dto));
+    @PostMapping("/create-expense/{token}")
+    public ResponseEntity<Boolean> createExpense(@RequestBody CreatExpenseRequestDto dto,@PathVariable String token){
+        return ResponseEntity.ok(expenseService.createExpense(dto,token));
     }
 
-    @PutMapping("/approvalExpense")
-    public ResponseEntity<Boolean> approvalExpense(ApprovalExpenseRequestDto dto){
-        return ResponseEntity.ok(expenseService.approvalExpense(dto));
+    @PutMapping("/approval-expense/{token}")
+    public ResponseEntity<Boolean> approvalExpense(@RequestBody ApprovalExpenseRequestDto dto,@PathVariable String token){
+        return ResponseEntity.ok(expenseService.approvalExpense(dto,token));
     }
 
-    @GetMapping("/getAllExpense")
+    @GetMapping("/get-all-expense")
     public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllExpense(){
         List<GetAllExpenseResponseDto> list=expenseService.getAllExpense();
         return ResponseEntity.ok(Optional.of(list));

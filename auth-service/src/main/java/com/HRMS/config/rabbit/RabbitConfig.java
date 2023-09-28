@@ -29,6 +29,9 @@ public class RabbitConfig {
     private String queueCreateAdmin="queue-create-admin";
     private String routingKeyCreateManager="key-create-manager";
     private String queueCreateManager="queue-create-manager";
+    // Forgot password mail
+    private String routingKeyForgotPassword="key-forgot-password";
+    private String queueForgotPassword="queue-forgot-password";
 
 
 // Beans for create guest user at user service
@@ -87,5 +90,12 @@ public class RabbitConfig {
     Binding bindingCreateManager(DirectExchange directExchangeAuth, Queue queueCreateManager) {
         return BindingBuilder.bind(queueCreateManager).to(directExchangeAuth).with(routingKeyCreateManager);
     }
+    @Bean
+    Queue queueForgotPassword() {return new Queue(queueForgotPassword);}
+    @Bean
+    Binding bindingForgotPassword(DirectExchange directExchangeAuth, Queue queueForgotPassword) {
+        return BindingBuilder.bind(queueForgotPassword).to(directExchangeAuth).with(routingKeyForgotPassword);
+    }
+
 
 }

@@ -11,14 +11,14 @@ import java.util.List;
 import static com.HRMS.constants.RestApiList.*;
 
 @RestController
-@RequestMapping(USER)
+@RequestMapping(DEBT)
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class DebtController {
-    private final DebtService debtService;
-    @PostMapping(ADVANCE)
-    public DebtResponseDto requestAdvance(@RequestBody DebtRequestDto requestDTO) {
-        return debtService.requestAdvance(requestDTO);
+    final DebtService debtService;
+    @PostMapping("/debt-request/{token}")
+    public DebtResponseDto requestAdvance(@RequestBody DebtRequestDto requestDTO,@PathVariable String token) {
+        return debtService.requestAdvance(requestDTO,token);
     }
 
     @GetMapping(ALLDEBTS)

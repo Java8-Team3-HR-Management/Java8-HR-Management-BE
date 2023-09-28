@@ -16,9 +16,8 @@ import java.time.LocalDate;
 @Document
 public class Debt extends BaseEntity{
     @Id
-    private Long id;
-
-    private Long userId;
+    private String id;
+    private String userId;
     private double salary;
     private LocalDate lastAdvanceDate;
 

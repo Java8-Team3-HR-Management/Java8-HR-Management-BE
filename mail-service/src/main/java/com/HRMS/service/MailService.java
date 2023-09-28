@@ -2,6 +2,7 @@ package com.HRMS.service;
 
 import com.HRMS.dto.request.SendActivationMailRequestDto;
 import com.HRMS.mapper.IMailMapper;
+import com.HRMS.rabbitmq.model.ForgotPassword;
 import com.HRMS.rabbitmq.model.SendActivationEmail;
 import com.HRMS.repository.IMailRepository;
 import com.HRMS.repository.entity.Mail;
@@ -41,6 +42,9 @@ public class MailService {
                         + "Şirket Maili " + mailRegisterModel.getCompanyMail()
                         + "\nŞifre: " + mailRegisterModel.getPassword()
  **/
+    }
+    public void sendForgotPasswordInfo(ForgotPassword mail){
+    mailService.sendMail(mail.getEmail(), "Your password is below. \n", "Your password: "+mail.getPassword());
     }
 
 }

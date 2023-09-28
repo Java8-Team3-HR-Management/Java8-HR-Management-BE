@@ -1,9 +1,6 @@
 package com.HRMS.service;
 
-import com.HRMS.dto.request.AddUserRequestDto;
-import com.HRMS.dto.request.DoLoginRequestDto;
-import com.HRMS.dto.request.DoRegisterRequestDto;
-import com.HRMS.dto.request.UserSaveRequestDto;
+import com.HRMS.dto.request.*;
 import com.HRMS.dto.response.DoLoginResponseDto;
 import com.HRMS.exceptions.AuthException;
 import com.HRMS.exceptions.ErrorType;
@@ -12,6 +9,7 @@ import com.HRMS.rabbitmq.model.*;
 import com.HRMS.rabbitmq.producer.CreateEmployeeProducer;
 import com.HRMS.rabbitmq.producer.CreateProfileProducer;
 import com.HRMS.rabbitmq.producer.EmailProducer;
+import com.HRMS.rabbitmq.producer.ForgotPasswordProducer;
 import com.HRMS.repository.IAuthRepository;
 import com.HRMS.repository.entity.Auth;
 import com.HRMS.repository.enums.ERole;
@@ -175,6 +173,19 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 .title(dto.getTitle())
                 .salary(dto.getSalary())
                 .build());
+        return true;
+    }
+
+    public Boolean forgotPassword(String email){
+     Optional<Auth> auth = repository.findOptionalByEmail(email);
+     if(auth.isEmpty()) throw new AuthException(ErrorType.FORGOT_PASSWORD_INVALID_EMAIL);
+     if (auth.get().isState()==false)throw new AuthException(ErrorType.BAD_REQUEST_ERROR);
+
+     ForgotPasswordProducer.sendMailForgotPassword(ForgotPassword.builder()
+             .email(email)
+             .authId(auth.get().getId())
+             .password(auth.get().getPassword())
+             .build());
         return true;
     }
 
