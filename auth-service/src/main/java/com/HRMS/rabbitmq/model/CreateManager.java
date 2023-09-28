@@ -13,6 +13,7 @@ import java.io.Serializable;
 @SuperBuilder
 public class CreateManager implements Serializable {
     Long authId;
+    String companyId;
     String name;
     String surname;
     String email;

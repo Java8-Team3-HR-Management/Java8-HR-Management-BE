@@ -18,6 +18,7 @@ import java.util.List;
 @SuperBuilder
 public class CreatExpenseRequestDto {
 
+    String companyId;
     String name;
     String surName;
     String department;

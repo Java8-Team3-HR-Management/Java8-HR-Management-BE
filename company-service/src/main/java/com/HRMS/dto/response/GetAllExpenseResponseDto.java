@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 public class GetAllExpenseResponseDto {
+    String companyId;
     String name;
     String surName;
     String department;

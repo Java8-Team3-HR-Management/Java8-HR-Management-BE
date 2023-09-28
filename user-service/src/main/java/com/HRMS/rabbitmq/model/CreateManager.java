@@ -16,6 +16,7 @@ public class CreateManager implements Serializable {
     String name;
     String surname;
     String email;
+    String companyId;
     String companyEmail;
     String companyName;
     String password;

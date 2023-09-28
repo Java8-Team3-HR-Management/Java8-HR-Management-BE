@@ -47,6 +47,7 @@ public class ExpenseService extends ServiceManager<Expense, String> {
                     .surName(dto.getSurName())
                     .department(dto.getDepartment())
                     .expenditureType(dto.getExpenditureType())
+                    .companyId(dto.getCompanyId())
                     .amountOfExpenditure(dto.getAmountOfExpenditure())
                     .approvalStatus(EStatus.PENDING)
                     .requestDate(LocalDate.now())
@@ -58,16 +59,16 @@ public class ExpenseService extends ServiceManager<Expense, String> {
         }
 
 
-    public List<GetAllExpenseResponseDto> getAllExpense() {
-        List<Expense> optExpenses= repository.findAll();
+    public List<GetAllExpenseResponseDto> getAllExpense(String companyId) {
+        List<Expense> optExpenses= repository.findByCompanyId(companyId);
         List<GetAllExpenseResponseDto> expenses= new ArrayList<>();
         for(Expense expense: optExpenses){
             expenses.add(IExpenseMapper.INSTANCE.toGetAllExpense(expense));
         }
         return expenses;
     }
-    public List<GetAllExpenseResponseDto> getAllPendingExpense() {
-        List<Expense> optExpenses= repository.findAll();
+    public List<GetAllExpenseResponseDto> getAllPendingExpense(String companyId) {
+        List<Expense> optExpenses= repository.findByCompanyId(companyId);
         List<GetAllExpenseResponseDto> expenses= new ArrayList<>();
         for(Expense expense: optExpenses){
             if (expense.getApprovalStatus()==EStatus.PENDING)
