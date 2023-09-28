@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface IVocationRepository extends MongoRepository<Vocation, String> {
     Optional<List<Vocation>> findAllByUserId(String id);
+    Optional<Vocation> findByUserId(String userId);
 }

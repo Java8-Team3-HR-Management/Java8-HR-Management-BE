@@ -78,7 +78,7 @@ public class VocationService extends ServiceManager<Vocation,String> {
         if (role.isEmpty()) {
             throw new UserException(ErrorType.UNAUTHORIZED_USER);
         }
-        Optional<Vocation> vocation = findById(dto.getUserId());
+        Optional<Vocation> vocation = vocationRepository.findByUserId(dto.getUserId());
         if(vocation.isEmpty()){
             throw new UserException(ErrorType.VOCATION_NOT_VALID);
         }

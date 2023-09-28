@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UpdateCommentRequestDto {
-    String commentId;
+    String id;
     Boolean state;
 }
