@@ -16,6 +16,6 @@ public class RestApiList {
     public static final String APPROVEVOCATIONREQUEST = USER + "/approvevocationrequest";
     public static final String REJECTVOCATIONREQUEST = USER + "/rejectvocationrequest";
     public static final String FINDALLBYSORT = USER + "/findallbyshort";
-    public static final String ADVANCE = USER + "/advance";
-    public static final String ALLDEBTS = USER + "/alldebts";
+    public static final String ADVANCE = "/advance";
+    public static final String ALLDEBTS = "/alldebts";
 }

@@ -33,12 +33,12 @@ public class ExpenseController {
     }
 
     @GetMapping("/get-all-expense/{companyId}")
-    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllExpense(@RequestParam String companyId){
+    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllExpense(@PathVariable String companyId){
         List<GetAllExpenseResponseDto> list=expenseService.getAllExpense(companyId);
         return ResponseEntity.ok(Optional.of(list));
     }
     @GetMapping("/get-all-pending-expense/{companyId}")
-    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllPendingExpense(@RequestParam String companyId){
+    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllPendingExpense(@PathVariable String companyId){
         List<GetAllExpenseResponseDto> list=expenseService.getAllPendingExpense(companyId);
         return ResponseEntity.ok(Optional.of(list));
     }

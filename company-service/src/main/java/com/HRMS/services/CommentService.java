@@ -58,7 +58,7 @@ public class CommentService extends ServiceManager<Comment, String> {
         if (role.isEmpty()) {
             throw new CompanyException(ErrorType.UNAUTHORIZED_USER);
         }
-        Comment comment = repository.findOptionalById(requestDto.getCommentId()).orElseThrow(() -> new CompanyException(ErrorType.COMMENT_NOT_FOUND));
+        Comment comment = repository.findOptionalById(requestDto.getId()).orElseThrow(() -> new CompanyException(ErrorType.COMMENT_NOT_FOUND));
         if (comment.getStatus() == EStatus.PENDING) {
             if (requestDto.getState() == true) {
                 comment.setStatus(EStatus.APPROVED);
