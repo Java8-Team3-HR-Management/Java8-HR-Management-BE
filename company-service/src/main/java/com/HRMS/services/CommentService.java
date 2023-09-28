@@ -15,6 +15,7 @@ import com.HRMS.utils.JwtTokenManager;
 import com.HRMS.utils.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,9 +76,17 @@ public class CommentService extends ServiceManager<Comment, String> {
         List<Comment> pendingComments = comments.stream().filter(comment -> comment.getStatus().equals(EStatus.PENDING)).toList();
         return pendingComments;
     }
-    public List<Comment> getAllApprovedComment() {
-        List<Comment> comments = repository.findAll();
-        List<Comment> pendingComments = comments.stream().filter(comment -> comment.getStatus().equals(EStatus.APPROVED)).toList();
-        return pendingComments;
+    public List<Comment> getAllApprovedComment(String companyId) {
+        Optional<List<Comment>> commentsOptional = repository.findAllByCompanyId(companyId);
+
+        if (commentsOptional.isPresent()) {
+            List<Comment> comments = commentsOptional.get();
+            List<Comment> approvedComments = comments.stream()
+                    .filter(comment -> comment.getStatus().equals(EStatus.APPROVED))
+                    .toList();
+            return approvedComments;
+        } else {
+            return Collections.emptyList();
+        }
     }
 }

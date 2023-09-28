@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class ForgotPasswordProducer {
     private final RabbitTemplate rabbitTemplate;
 
-    public static void sendMailForgotPassword(ForgotPassword email){
+    public  void sendMailForgotPassword(ForgotPassword email){
         rabbitTemplate.convertAndSend("direct-exchange-auth","key-forgot-password",email);
     }
 }

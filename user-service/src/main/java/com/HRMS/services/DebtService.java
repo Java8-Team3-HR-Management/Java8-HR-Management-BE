@@ -6,7 +6,9 @@ import com.HRMS.exceptions.ErrorType;
 import com.HRMS.exceptions.UserException;
 import com.HRMS.mapper.IUserMapper;
 import com.HRMS.repository.IDebtRepository;
+import com.HRMS.repository.IUserRepository;
 import com.HRMS.repository.entity.Debt;
+import com.HRMS.repository.entity.User;
 import com.HRMS.utils.JwtTokenManager;
 import com.HRMS.utils.ServiceManager;
 import org.springframework.stereotype.Service;
@@ -15,33 +17,37 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class DebtService extends ServiceManager<Debt, String> {
+
+    private final IUserRepository userRepository;
     private final IDebtRepository repository;
     private final IUserMapper userMapper;
     private final JwtTokenManager tokenManager;
 
-    public DebtService(IDebtRepository repository, IUserMapper userMapper,JwtTokenManager tokenManager) {
+    public DebtService(IUserRepository userRepository,IDebtRepository repository, IUserMapper userMapper, JwtTokenManager tokenManager) {
         super(repository);
+        this.userRepository = userRepository;
         this.repository = repository;
         this.userMapper = userMapper;
-        this.tokenManager=tokenManager;
+        this.tokenManager = tokenManager;
     }
 
-    public DebtResponseDto requestAdvance(DebtRequestDto requestDTO,String token) {
-        Optional<Long> id=tokenManager.getByIdFromToken(token);
+    public Boolean requestAdvance(DebtRequestDto requestDTO, String token) {
+        Optional<Long> id = tokenManager.getByIdFromToken(token);
         if (id.isEmpty()) {
             throw new UserException(ErrorType.USER_NOT_FOUND);
         }
         LocalDate currentDate = LocalDate.now();
         Optional<Debt> optionalDebt = repository.findByUserId(requestDTO.getUserId());
-        if (optionalDebt.isPresent() && optionalDebt.get().getLastAdvanceDate() != null
+        if (!optionalDebt.isEmpty() && !(optionalDebt.get().getLastAdvanceDate() == null)
                 && optionalDebt.get().getLastAdvanceDate().getMonth().equals(currentDate.getMonth())) {
             throw new UserException(ErrorType.DEBT_ONE_TIME);
         }
-        Debt existingDebt = optionalDebt.orElseThrow(() -> new UserException(ErrorType.DEBT_NOT_FOUND));
+        Optional<User> optionalUser = userRepository.findById(requestDTO.getUserId());
 
-        double maxAllowedAmount = existingDebt.getSalary() / 2;
+        double maxAllowedAmount = optionalUser.get().getSalary() / 2;
         if (requestDTO.getRequestedAmount() > maxAllowedAmount) {
             throw new UserException(ErrorType.DEBT_OVER_LIMIT);
         }
@@ -52,10 +58,11 @@ public class DebtService extends ServiceManager<Debt, String> {
         double remainingSalary = debt.getSalary() - requestDTO.getRequestedAmount();
         debt.setSalary(remainingSalary);
         debt.setLastAdvanceDate(LocalDate.now());
-        repository.save(debt);
+        save(debt);
 
-        return userMapper.toResponseDto(debt);
+        return true;
     }
+
     public List<DebtResponseDto> getAllDebts() {
         List<Debt> debts = repository.findAll();
         List<DebtResponseDto> advanceResponseDTOs = new ArrayList<>();

@@ -147,4 +147,5 @@ public class UserService extends ServiceManager<User,Long> {
         throw new UserException(ErrorType.EMPLOYEE_ALREADY_EXIST);
     }
 
+
 }
