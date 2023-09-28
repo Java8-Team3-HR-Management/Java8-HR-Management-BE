@@ -21,10 +21,8 @@ public class GetAllExpenseResponseDto {
     String surName;
     String department;
     ExpenditureType expenditureType;
-    BigDecimal amountOfExpenditure;
-    String currency;
+    Double amountOfExpenditure;
     EStatus approvalStatus;
     LocalDate requestDate;
     LocalDate replyDate;
-    List<String> file;
 }

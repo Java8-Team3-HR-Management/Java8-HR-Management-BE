@@ -41,32 +41,20 @@ public class ExpenseService extends ServiceManager<Expense, String> {
         if (role.isEmpty()) {
             throw new CompanyException(ErrorType.UNAUTHORIZED_USER);
         }
-        if(dto.getFile().isEmpty()){
+        if(role.get().equals("EMPLOYEE")){
             Expense expense = Expense.builder()
                     .name(dto.getName())
                     .surName(dto.getSurName())
                     .department(dto.getDepartment())
                     .expenditureType(dto.getExpenditureType())
                     .amountOfExpenditure(dto.getAmountOfExpenditure())
-                    .currency(dto.getCurrency())
                     .approvalStatus(EStatus.PENDING)
                     .requestDate(LocalDate.now())
                     .build();
             save(expense);
+            return true;
            }
-        Expense expense = Expense.builder()
-                .name(dto.getName())
-                .surName(dto.getSurName())
-                .department(dto.getDepartment())
-                .expenditureType(dto.getExpenditureType())
-                .amountOfExpenditure(dto.getAmountOfExpenditure())
-                .currency(dto.getCurrency())
-                .approvalStatus(EStatus.PENDING)
-                .requestDate(LocalDate.now())
-                .file(dto.getFile())
-                .build();
-        save(expense);
-        return true;
+        throw new CompanyException(ErrorType.UNAUTHORIZED_USER);
         }
 
 
@@ -74,6 +62,15 @@ public class ExpenseService extends ServiceManager<Expense, String> {
         List<Expense> optExpenses= repository.findAll();
         List<GetAllExpenseResponseDto> expenses= new ArrayList<>();
         for(Expense expense: optExpenses){
+            expenses.add(IExpenseMapper.INSTANCE.toGetAllExpense(expense));
+        }
+        return expenses;
+    }
+    public List<GetAllExpenseResponseDto> getAllPendingExpense() {
+        List<Expense> optExpenses= repository.findAll();
+        List<GetAllExpenseResponseDto> expenses= new ArrayList<>();
+        for(Expense expense: optExpenses){
+            if (expense.getApprovalStatus()==EStatus.PENDING)
             expenses.add(IExpenseMapper.INSTANCE.toGetAllExpense(expense));
         }
         return expenses;

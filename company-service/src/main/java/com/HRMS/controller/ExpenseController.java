@@ -37,6 +37,12 @@ public class ExpenseController {
         List<GetAllExpenseResponseDto> list=expenseService.getAllExpense();
         return ResponseEntity.ok(Optional.of(list));
     }
+    @GetMapping("/get-all-pending-expense")
+    public ResponseEntity<Optional<List<GetAllExpenseResponseDto>>> getAllPendingExpense(){
+        List<GetAllExpenseResponseDto> list=expenseService.getAllPendingExpense();
+        return ResponseEntity.ok(Optional.of(list));
+    }
+
 
 
 
