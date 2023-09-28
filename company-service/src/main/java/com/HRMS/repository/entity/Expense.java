@@ -26,13 +26,12 @@ public class Expense extends BaseEntity {
     String surName;
     String department;
     ExpenditureType expenditureType;
-    BigDecimal amountOfExpenditure;
-    String currency;
+    Double amountOfExpenditure;
     @Builder.Default
     EStatus approvalStatus = EStatus.PENDING;
     LocalDate requestDate;
     LocalDate replyDate;
-    List<String> file;
+
 
 
 

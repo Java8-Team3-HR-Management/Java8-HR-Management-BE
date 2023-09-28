@@ -22,9 +22,7 @@ public class CreatExpenseRequestDto {
     String surName;
     String department;
     ExpenditureType expenditureType;
-    BigDecimal amountOfExpenditure;
-    String currency;
+    Double amountOfExpenditure;
     EStatus approvalStatus;
     LocalDate requestDate;
-    List<String> file;
 }

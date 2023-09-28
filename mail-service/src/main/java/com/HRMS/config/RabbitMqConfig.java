@@ -21,9 +21,6 @@ public class RabbitMqConfig {
     Queue queueSendActivationMail(){
         return new Queue(queueSendActivationMail);
     }
-
-
-
     @Bean
     Queue queueForgotPassword() {return new Queue(queueForgotPassword);}
 }
