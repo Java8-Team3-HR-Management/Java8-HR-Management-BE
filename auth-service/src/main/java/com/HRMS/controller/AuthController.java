@@ -96,8 +96,8 @@ public class AuthController {
 
     }
 
-@PostMapping("/forgot-password")
-public ResponseEntity<Boolean> forgotPassword(@RequestBody String email){
+@PostMapping("/forgot-password/{email}")
+public ResponseEntity<Boolean> forgotPassword(@PathVariable String email){
         return ResponseEntity.ok(authService.forgotPassword(email));
 }
 

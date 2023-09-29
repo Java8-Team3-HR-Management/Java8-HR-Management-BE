@@ -170,7 +170,7 @@ public class AuthService extends ServiceManager<Auth, Long> {
                 .surname(dto.getSurname())
                 .email(dto.getEmail())
                 .password(dto.getPassword())
-                        .companyId(dto.getCompanyId())
+                .companyId(dto.getCompanyId())
                 .companyEmail(dto.getCompanyEmail())
                 .companyName(dto.getCompanyName())
                 .title(dto.getTitle())
