@@ -85,15 +85,19 @@ public class CompanyService extends ServiceManager<Company, String> {
         return company;
     }
     public CompanyAverageRateResponseDto getCompanyAverageRate(String companyId) {
+
         Optional<List<Comment>> optComments = commentRepository.findAllByCompanyId(companyId);
+        List<Comment> commentList = optComments.get().stream().filter(comment ->  comment.getStatus().equals(EStatus.APPROVED)).toList();
         Double avg = 0.0;
-        for (Comment comment : optComments.get()) {
+        for (Comment comment : commentList) {
             avg += comment.getRate();
         }
-        Double finalAvg = avg / optComments.get().size();
+        int size = commentList.size();
+        Double finalAvg = avg / size;
         Company company = companyRepository.findById(companyId).get();
         company.setTotalRate(finalAvg);
         return CompanyAverageRateResponseDto.builder()
+                .size(size)
                 .avgRate(finalAvg)
                 .build();
     }

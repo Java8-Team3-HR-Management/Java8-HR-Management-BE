@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CompanyAverageRateResponseDto {
     Double avgRate;
+    int size;
 }
