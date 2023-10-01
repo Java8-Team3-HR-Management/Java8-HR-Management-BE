@@ -1,6 +1,7 @@
 package com.HRMS.dto.request;
 
 import com.HRMS.repository.enums.EStatus;
+import com.HRMS.repository.enums.SubPackageType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,6 @@ public class AddCompanyRequestDto {
     @Size(min = 10,max=64)
     String companyWebsite;
     EStatus status ;
-
+    SubPackageType subPackageType;
     Long taxNumber;
 }

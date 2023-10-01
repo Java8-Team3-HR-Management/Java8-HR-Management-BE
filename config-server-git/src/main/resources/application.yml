@@ -1,5 +1,5 @@
 server:
-  port: 8880
+  port: 8888
 spring:
   application:
     name: config-server-git
@@ -10,5 +10,5 @@ spring:
           uri: "https://github.com/Java8-Team3-HR-Management/config-server-git.git"
           default-label: main
           skip-ssl-validation: true
-          username: ${GIT_USERNAME}
+          username: uguryagmur96
           password: ${GIT_PASSWORD}

@@ -43,12 +43,22 @@ public class CommentService extends ServiceManager<Comment, String> {
        }
        Optional<String> role=tokenManager.getRoleFromToken(token.toString());
        if(role.isPresent() && role.get().equals("EMPLOYEE")){
-           Company company =companyRepository.findByCompanyNameEqualsIgnoreCase(requestDto.getCompanyName());
-           Comment comment = ICommentMapper.INSTANCE.toCommentFromDto(requestDto);
-           comment.setStatus(EStatus.PENDING);
-           comment.setCompanyId(company.getId());
-           save(comment);
-           return true;
+         Optional<Company>company =companyRepository.findByCompanyNameEqualsIgnoreCase(requestDto.getCompanyName());
+         if (company.get().getSubPackageType().equals("SILVER")||company.get().getSubPackageType().equals("GOLD")){
+             Comment comment = ICommentMapper.INSTANCE.toCommentFromDto(requestDto);
+             if (company.get().getSubPackageType().equals("GOLD")){
+                 comment.setStatus(EStatus.PENDING);
+                 comment.setCompanyId(company.get().getId());
+                 save(comment);
+                 return true;
+             }
+             comment.setStatus(EStatus.PENDING);
+             comment.setCompanyId(company.get().getId());
+             comment.setRate(null);
+             save(comment);
+             return true;
+         }
+        throw new CompanyException(ErrorType.UNAUTHORIZED_PACKAGE);
        }
         throw new CompanyException(ErrorType.UNAUTHORIZED_USER);
     }

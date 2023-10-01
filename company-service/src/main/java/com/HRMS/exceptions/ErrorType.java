@@ -30,7 +30,8 @@ public enum ErrorType {
     COMMENT_NOT_FOUND(1009,"Comment not found",HttpStatus.BAD_REQUEST),
     USER_NOT_FOUND(1010,"User not found",HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(1011,"Invalid Token",HttpStatus.BAD_REQUEST),
-    EXPENSE_NOT_FOUND(1012,"Böyle bir harcama kaydı bulunmamaktadır",HttpStatus.BAD_REQUEST);
+    UNAUTHORIZED_PACKAGE(1012,"Unavailable sub package",HttpStatus.BAD_REQUEST),
+    EXPENSE_NOT_FOUND(1013,"Böyle bir harcama kaydı bulunmamaktadır",HttpStatus.BAD_REQUEST);
 
 
     

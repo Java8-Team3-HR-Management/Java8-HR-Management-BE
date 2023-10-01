@@ -37,6 +37,7 @@ public class CompanyService extends ServiceManager<Company, String> {
             throw new CompanyException(ErrorType.COMPANY_ALREADY_EXISTS);
         } else {
             Company company = ICompanyMapper.INSTANCE.toCompanyFromDto(dto);
+            company.setSubPackageType(dto.getSubPackageType());
             save(company);
         }
 

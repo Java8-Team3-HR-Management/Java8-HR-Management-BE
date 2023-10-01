@@ -1,6 +1,7 @@
 package com.HRMS.repository.entity;
 
 import com.HRMS.repository.enums.EStatus;
+import com.HRMS.repository.enums.SubPackageType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,4 +30,5 @@ public class Company extends BaseEntity {
     Double totalRate;
     @Builder.Default
     EStatus status = PENDING;
+    SubPackageType subPackageType;
 }
