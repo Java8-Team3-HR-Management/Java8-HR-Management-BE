@@ -1,5 +1,5 @@
 # PROJECT FLOW CHART 
-<img src="C:\Users\ugurg\Desktop\projectflow (1).jpg"/>
+<img src="C:\Users\ugurg\Desktop\projectflow (1).jpg">
 
 # APPLICATION REQUIREMENTS AND CONFIGURATION SETTINGS
 
