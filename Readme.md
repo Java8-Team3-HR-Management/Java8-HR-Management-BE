@@ -1,5 +1,5 @@
 # PROJECT FLOW CHART 
-![Alt text](D:\Mono\gradleNetBeans\Java8-HR-Management-BE\projectflow.jpg)
+![Alt text](https://hizliresim.com/a4tbxce)
 
 
 
