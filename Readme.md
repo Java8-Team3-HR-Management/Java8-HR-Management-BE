@@ -1,5 +1,11 @@
 # PROJECT FLOW CHART 
-<img src="C:\Users\ugurg\Desktop\projectflow (1).jpg"/>
+![Alt text](D:\Mono\gradleNetBeans\Java8-HR-Management-BE\projectflow.jpg)
+
+
+
+
+
+
 
 # APPLICATION REQUIREMENTS AND CONFIGURATION SETTINGS
 
