@@ -1,19 +1,22 @@
+# PROJECT FLOW CHART 
+<img src="C:\Users\ugurg\Desktop\projectflow (1).jpg"/>
+
 # APPLICATION REQUIREMENTS AND CONFIGURATION SETTINGS
 
 ## Postgre SQL Configuration Settings
-    -  url: jdbc:postgresql://localhost:5432/HRMSAuthDB
+    -  url: jdbc:postgresql://localhost//ClusterIP:5432/HRMSAuthDB
     username: hrmsuser1
     password: 12345
 ## MongoDB Configuration Settings 
     - mongodb:
-      host: localhost
+      host: localhost // ClusterIP
       port: 27017
       database: hrmsdb
       username: admin12
       password: hrms**
 ## Rabbit Configuration Settings
     -rabbitmq:
-    host: localhost
+    host: localhost//ClusterIP
     port: 5672
     username: hrms1
     password: hrms**
